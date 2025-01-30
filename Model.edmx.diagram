@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="19f706dbd67140eb9cac1f05db02d6ea" Name="Diagram1">
+        <EntityTypeShape EntityType="salon_krasotiModel.Appointments" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="salon_krasotiModel.Clients" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="salon_krasotiModel.Employees" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="salon_krasotiModel.Payments" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="salon_krasotiModel.Products" Width="1.5" PointX="5.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="salon_krasotiModel.Promotions" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="salon_krasotiModel.Reviews" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="salon_krasotiModel.Roles" Width="1.5" PointX="1.5" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="salon_krasotiModel.Sales" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="salon_krasotiModel.Services" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="salon_krasotiModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="salon_krasotiModel.UserAccounts" Width="1.5" PointX="3.75" PointY="13" IsExpanded="true" />
+        <AssociationConnector Association="salon_krasotiModel.FK__Appointme__Clien__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="salon_krasotiModel.FK__Appointme__Emplo__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="salon_krasotiModel.FK__Appointme__Servi__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="salon_krasotiModel.FK__Payments__Appoin__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="salon_krasotiModel.FK__Clients__RoleID__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="salon_krasotiModel.FK__Reviews__ClientI__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="salon_krasotiModel.FK__Employees__RoleI__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="salon_krasotiModel.FK__Sales__EmployeeI__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="salon_krasotiModel.FK__Payments__Servic__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="salon_krasotiModel.FK__Reviews__Service__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="salon_krasotiModel.FK__UserAccou__RoleI__7A672E12" ManuallyRouted="false" />
+        <AssociationConnector Association="salon_krasotiModel.FK__Sales__ServiceID__6FE99F9F" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

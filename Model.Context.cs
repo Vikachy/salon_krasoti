@@ -20,7 +20,7 @@ namespace salon_krasoti
         {
         }
 
-        private static Entities _context;
+        private static Entities _context;//приватная переменная
 
         public static Entities GetContext()
         {

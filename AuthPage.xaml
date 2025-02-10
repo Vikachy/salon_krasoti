@@ -1,0 +1,27 @@
+﻿<Page x:Class="salon_krasoti.AuthPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:salon_krasoti"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AuthPage">
+
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Content="Введите логин:" Grid.Row="0" Margin="0,0,0,10" VerticalAlignment="Center"/>
+        <TextBox x:Name="loginTextBox" Grid.Row="1" Margin="0,0,0,10"  Text="Логин"/>
+        <Label Content="Введите пароль:" Grid.Row="2" Margin="0,0,0,10" VerticalAlignment="Center"/>
+        <PasswordBox x:Name="passwordText" Grid.Row="3" Margin="0,0,0,20"/>
+        <Button Grid.Row="4" Content="Войти" Click="signInButton_Click"/>
+        <Button Grid.Row="5" Content="Регистрация" Margin="0,10" Click="NavigateToReg_Click"/>
+    </Grid>
+</Page>

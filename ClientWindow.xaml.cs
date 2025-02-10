@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,21 +10,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace salon_krasoti
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для ClientWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ClientWindow : Window
     {
-        public MainWindow()
+        private UserAccounts _user;
+
+        public ClientWindow(UserAccounts user)
         {
             InitializeComponent();
-            contentFrame.Navigate(new AuthPage());
+            _user = user;
+            // Инициализация данных клиента
         }
-
     }
 }

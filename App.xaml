@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:salon_krasoti"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+       
     </Application.Resources>
 </Application>

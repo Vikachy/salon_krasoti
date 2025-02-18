@@ -46,6 +46,12 @@ namespace salon_krasoti
                     return;
                 }
 
+                if (passwordText.Password != confirmPasswordText.Password)
+                {
+                    MessageBox.Show("Пароли не совпадают!");
+                    return;
+                }
+
                 bool hasLetter = false;
                 bool hasNumber = false;
                 foreach (char c in passwordText.Password)

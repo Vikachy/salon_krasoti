@@ -5,8 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:salon_krasoti"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="AdminWindow" Height="450" Width="800" 
+        Style="{StaticResource AdminWindowStyle}">
+    <Border Height="650" Width="1024" CornerRadius="30">
+        <Border.Background>
+            <RadialGradientBrush GradientOrigin="0,0">
+                <GradientStop Color="#f2ddc6" Offset="1"/>
+                <GradientStop Color="#b89362" Offset="0.13"/>
+            </RadialGradientBrush>
+        </Border.Background>
+            <DockPanel>
+            <StackPanel DockPanel.Dock="Left" 
+                        Width="200" 
+                        Background="#f2ddc6">
+
+                <Button Content="Пользователи" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="NavigateToUsers_Click"/>
+
+                <Button Content="Услуги" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="NavigateToServices_Click"/>
+
+                <Button Content="Препараты" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="NavigateToProducts_Click"/>
+
+                <Button Content="Записи" 
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="NavigateToAppointments_Click"/>
+
+                <Button Content="Выйти" 
+                        Style="{StaticResource LogoutButtonStyle}"
+                        Click="Logout_Click"/>
+            </StackPanel>
+
+            <Frame x:Name="MainFrame" 
+                   NavigationUIVisibility="Hidden"/>
+        </DockPanel>
+    </Border>
 </Window>

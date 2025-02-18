@@ -8,27 +8,65 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="RegPage">
 
-    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <Grid Style="{StaticResource PageBackground}">
+        <Border Style="{StaticResource RegFormBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-        <TextBox x:Name="loginText" Grid.Row="0" Margin="0,0,0,10" />
-        <PasswordBox x:Name="passwordText" Grid.Row="1" Margin="0,0,0,10" />
-        <TextBox x:Name="nameText" Grid.Row="2" Margin="0,0,0,10" />
-        <TextBox x:Name="surnameText" Grid.Row="3" Margin="0,0,0,10" Text="Фамилия"/>
-        <TextBox x:Name="emailText" Grid.Row="4" Margin="0,0,0,10" 
-                 Text="Email"/>
-        <TextBox x:Name="phoneText" Grid.Row="5" Margin="0,0,0,10" 
-                 Text="Телефон"/>
-        <Button Grid.Row="6" Content="Зарегистрироваться"  Click="signUpButton_Click"/>
-        <Button Grid.Row="7" Content="Назад" Margin="0,10"  Click="NavigateToAuth_Click"/>
+                <TextBlock Grid.Row="0" Style="{StaticResource FormTitle}" Text="Регистрация"/>
+
+                <StackPanel Grid.Row="1" Orientation="Vertical">
+                    <TextBlock Style="{StaticResource TextStyle}" Text="Введите имя:"/>
+                    <TextBox Style="{StaticResource ModernTextBox}" x:Name="nameText"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Orientation="Vertical" >
+                    <TextBlock Style="{StaticResource TextStyle}" Text="Введите фамилию:"/>
+                    <TextBox Style="{StaticResource ModernTextBox}" x:Name="surnameText"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="3" Orientation="Vertical">
+                    <TextBlock Style="{StaticResource TextStyle}" Text="Введите логин:"/>
+                    <TextBox Style="{StaticResource ModernTextBox}" x:Name="loginText"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="4" Orientation="Vertical">
+                    <TextBlock Style="{StaticResource TextStyle}" Text="Введите email:"/>
+                    <TextBox Style="{StaticResource ModernTextBox}" x:Name="emailText"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="5" Orientation="Vertical">
+                    <TextBlock Style="{StaticResource TextStyle}" Text="Введите номер телефона:"/>
+                    <TextBox Style="{StaticResource ModernTextBox}" x:Name="phoneText"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="6" Orientation="Vertical">
+                    <TextBlock Style="{StaticResource TextStyle}" Text="Введите пароль:"/>
+                    <PasswordBox Style="{StaticResource ModernPasswordBox}" x:Name="passwordText" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="7" Orientation="Vertical">
+                    <TextBlock Style="{StaticResource TextStyle}" Text="Подтвердите пароль:"/>
+                    <PasswordBox Style="{StaticResource ModernPasswordBox}" x:Name="confirmPasswordText"/>
+                </StackPanel>
+
+                <Button Grid.Row="8" Style="{StaticResource CustomButtonStyle}" Content="Зарегистрироваться" 
+                        Click="signUpButton_Click" />
+
+                <Button Grid.Row="9" Style="{StaticResource TextButtonStyle}" Content="Назад"
+                        Click="NavigateToAuth_Click"/>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

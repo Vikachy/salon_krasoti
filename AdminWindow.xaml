@@ -18,29 +18,22 @@
         <DockPanel>
             <StackPanel DockPanel.Dock="Left" Style="{StaticResource StackPanelAdmin}">
 
-                <Button Content="Клиенты" Style="{StaticResource MenuButtonStyle}"/>
+                <Button Content="Клиенты" Style="{StaticResource MenuButtonStyle}" Click="Clients_Click"/>
 
-                <Button Content="Сотрудники" 
-                        Style="{StaticResource MenuButtonStyle}"/>
+                <Button Content="Сотрудники" Style="{StaticResource MenuButtonStyle}" Click="Employees_Click"/>
 
-                <Button Content="Услуги" 
-                        Style="{StaticResource MenuButtonStyle}"/>
+                <Button Content="Услуги" Style="{StaticResource MenuButtonStyle}" Click="Services_Click"/>
 
-                <Button Content="Продукты" 
-                        Style="{StaticResource MenuButtonStyle}"/>
+                <Button Content="Продукты" Style="{StaticResource MenuButtonStyle}" Click="Products_Click"/>
 
-                <Button Content="Записи" 
-                        Style="{StaticResource MenuButtonStyle}"/>
+                <Button Content="Записи" Style="{StaticResource MenuButtonStyle}" Click="Appointments_Click"/>
 
-                <Button Content="Акции" 
-                        Style="{StaticResource MenuButtonStyle}"/>
+                <Button Content="Акции"  Style="{StaticResource MenuButtonStyle}"  Click="Promotions_Click"/>
 
-                <Button Content="Выйти" 
-                        Style="{StaticResource LogoutButtonStyle}"/>
+                <Button Content="Выйти" Style="{StaticResource LogoutButtonStyle}" Click="Logout_Click"/>
             </StackPanel>
 
-            <Frame x:Name="MainFrame" 
-                   NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
         </DockPanel>
     </Border>
 </Window>

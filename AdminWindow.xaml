@@ -5,39 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:salon_krasoti"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="450" Width="800" 
+        Title="AdminWindow" Height="800" Width="1300" 
         Style="{StaticResource AdminWindowStyle}">
-    <Border Height="650" Width="1024" CornerRadius="30">
+    <Border>
         <Border.Background>
-            <RadialGradientBrush GradientOrigin="0,0">
-                <GradientStop Color="#f2ddc6" Offset="1"/>
-                <GradientStop Color="#b89362" Offset="0.13"/>
-            </RadialGradientBrush>
+            <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                <GradientStop Color="#F19CBB" Offset="0.75"/>
+                <GradientStop Color="#fadbc8" Offset="0.3"/>
+            </LinearGradientBrush>
         </Border.Background>
-            <DockPanel>
-            <StackPanel DockPanel.Dock="Left" 
-                        Width="200" 
-                        Background="#f2ddc6">
 
-                <Button Content="Пользователи" 
-                        Style="{StaticResource MenuButtonStyle}"
-                        Click="NavigateToUsers_Click"/>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Left" Style="{StaticResource StackPanelAdmin}">
+
+                <Button Content="Клиенты" Style="{StaticResource MenuButtonStyle}"/>
+
+                <Button Content="Сотрудники" 
+                        Style="{StaticResource MenuButtonStyle}"/>
 
                 <Button Content="Услуги" 
-                        Style="{StaticResource MenuButtonStyle}"
-                        Click="NavigateToServices_Click"/>
+                        Style="{StaticResource MenuButtonStyle}"/>
 
-                <Button Content="Препараты" 
-                        Style="{StaticResource MenuButtonStyle}"
-                        Click="NavigateToProducts_Click"/>
+                <Button Content="Продукты" 
+                        Style="{StaticResource MenuButtonStyle}"/>
 
                 <Button Content="Записи" 
-                        Style="{StaticResource MenuButtonStyle}"
-                        Click="NavigateToAppointments_Click"/>
+                        Style="{StaticResource MenuButtonStyle}"/>
+
+                <Button Content="Акции" 
+                        Style="{StaticResource MenuButtonStyle}"/>
 
                 <Button Content="Выйти" 
-                        Style="{StaticResource LogoutButtonStyle}"
-                        Click="Logout_Click"/>
+                        Style="{StaticResource LogoutButtonStyle}"/>
             </StackPanel>
 
             <Frame x:Name="MainFrame" 

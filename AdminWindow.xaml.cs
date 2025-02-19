@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace salon_krasoti
@@ -25,7 +26,7 @@ namespace salon_krasoti
         {
             InitializeComponent();
             _user = user;
-            // Инициализация данных администратора
         }
+
     }
 }

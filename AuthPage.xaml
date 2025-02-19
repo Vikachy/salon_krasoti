@@ -5,8 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:salon_krasoti"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="AuthPage">
+      d:DesignHeight="800" d:DesignWidth="1300"
+      Title="Вход">
 
     <Grid Style="{StaticResource PageBackground}">
         <Border Style="{StaticResource AuthFormBorder}">

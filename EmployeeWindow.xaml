@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:salon_krasoti"
         mc:Ignorable="d"
-        Title="EmployeeWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Аккаунт Сотрудника" Height="800" Width="1300"
+      Style="{StaticResource EmployeeWindowStyle}">
+
+    <Border CornerRadius="30">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FFE8F5E9" Offset="0"/>
+                <GradientStop Color="#FFC8E6C9" Offset="0.7"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Left" 
+                        Width="200" 
+                        Background="#FF4CAF50">
+
+                <Button Content="Мои записи" 
+                        Style="{StaticResource MenuButtonStyle}"/>
+
+                <Button Content="Продажи" 
+                        Style="{StaticResource MenuButtonStyle}"/>
+
+                <Button Content="Продукты"  Style="{StaticResource MenuButtonStyle}"/>
+
+                <Button Content="Выйти" 
+                        Style="{StaticResource LogoutButtonStyle}"/>
+            </StackPanel>
+
+            <Frame x:Name="MainFrame" 
+                   NavigationUIVisibility="Hidden"/>
+        </DockPanel>
+    </Border>
 </Window>

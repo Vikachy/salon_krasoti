@@ -67,8 +67,10 @@ namespace salon_krasoti
                         return;
                 }
 
+                Window currentWindow = Application.Current.MainWindow;
                 newWindow.Show();
-                Application.Current.MainWindow.Close();
+                currentWindow.Close();
+
             }
         }
 

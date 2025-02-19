@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище salon_krasotiModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище salon_krasotiModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Appointments">
           <Key>
             <PropertyRef Name="AppointmentID" />
@@ -15,6 +15,7 @@
           <Property Name="ServiceID" Type="int" Nullable="false" />
           <Property Name="AppointmentDateTime" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PromotionID" Type="int" />
         </EntityType>
         <EntityType Name="Clients">
           <Key>
@@ -270,6 +271,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Appointments_Promotions">
+          <End Role="Promotions" Type="Self.Promotions" Multiplicity="0..1" />
+          <End Role="Appointments" Type="Self.Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Promotions">
+              <PropertyRef Name="PromotionID" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="PromotionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище salon_krasotiModelContainer">
           <EntitySet Name="Appointments" EntityType="Self.Appointments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
@@ -331,9 +344,12 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="UserAccounts" EntitySet="UserAccounts" />
           </AssociationSet>
+          <AssociationSet Name="FK_Appointments_Promotions" Association="Self.FK_Appointments_Promotions">
+            <End Role="Promotions" EntitySet="Promotions" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="salon_krasotiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -351,6 +367,8 @@
           <NavigationProperty Name="Employees" Relationship="Self.FK__Appointme__Emplo__656C112C" FromRole="Appointments" ToRole="Employees" />
           <NavigationProperty Name="Services" Relationship="Self.FK__Appointme__Servi__66603565" FromRole="Appointments" ToRole="Services" />
           <NavigationProperty Name="Payments" Relationship="Self.FK__Payments__Appoin__693CA210" FromRole="Appointments" ToRole="Payments" />
+          <Property Name="PromotionID" Type="Int32" />
+          <NavigationProperty Name="Promotions" Relationship="salon_krasotiModel.FK_Appointments_Promotions" FromRole="Appointments" ToRole="Promotions" />
         </EntityType>
         <EntityType Name="Clients">
           <Key>
@@ -414,6 +432,7 @@
           <Property Name="DiscountPercentage" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Appointments" Relationship="salon_krasotiModel.FK_Appointments_Promotions" FromRole="Promotions" ToRole="Appointments" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -687,7 +706,23 @@
             <End Role="Services" EntitySet="Services" />
             <End Role="Sales" EntitySet="Sales" />
           </AssociationSet>
+          <AssociationSet Name="FK_Appointments_Promotions" Association="salon_krasotiModel.FK_Appointments_Promotions">
+            <End Role="Promotions" EntitySet="Promotions" />
+            <End Role="Appointments" EntitySet="Appointments" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Appointments_Promotions">
+          <End Type="salon_krasotiModel.Promotions" Role="Promotions" Multiplicity="0..1" />
+          <End Type="salon_krasotiModel.Appointments" Role="Appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Promotions">
+              <PropertyRef Name="PromotionID" />
+            </Principal>
+            <Dependent Role="Appointments">
+              <PropertyRef Name="PromotionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -697,6 +732,7 @@
           <EntitySetMapping Name="Appointments">
             <EntityTypeMapping TypeName="salon_krasotiModel.Appointments">
               <MappingFragment StoreEntitySet="Appointments">
+                <ScalarProperty Name="PromotionID" ColumnName="PromotionID" />
                 <ScalarProperty Name="AppointmentID" ColumnName="AppointmentID" />
                 <ScalarProperty Name="ClientID" ColumnName="ClientID" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />

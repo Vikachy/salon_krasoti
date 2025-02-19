@@ -19,14 +19,6 @@ namespace salon_krasoti
             : base("name=Entities")
         {
         }
-
-        private static Entities _context;//приватная переменная
-
-        public static Entities GetContext()
-        {
-            if (_context == null) _context = new Entities();
-            return _context;
-        }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

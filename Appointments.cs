@@ -26,11 +26,13 @@ namespace salon_krasoti
         public int ServiceID { get; set; }
         public System.DateTime AppointmentDateTime { get; set; }
         public string Status { get; set; }
+        public Nullable<int> PromotionID { get; set; }
     
         public virtual Clients Clients { get; set; }
         public virtual Employees Employees { get; set; }
         public virtual Services Services { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payments> Payments { get; set; }
+        public virtual Promotions Promotions { get; set; }
     }
 }

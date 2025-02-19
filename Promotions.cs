@@ -14,10 +14,19 @@ namespace salon_krasoti
     
     public partial class Promotions
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Promotions()
+        {
+            this.Appointments = new HashSet<Appointments>();
+        }
+    
         public int PromotionID { get; set; }
         public string PromotionName { get; set; }
         public Nullable<decimal> DiscountPercentage { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Appointments> Appointments { get; set; }
     }
 }

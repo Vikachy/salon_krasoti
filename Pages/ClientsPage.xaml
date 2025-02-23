@@ -9,27 +9,45 @@
       Title="ClientsPage">
     <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0 0 0 20">
-            <Button Content="Добавить" Style="{StaticResource CustomButtonStyle}"/>
-            <Button Content="Редактировать" Style="{StaticResource CustomButtonStyle}" Margin="10 0"/>
-        </StackPanel>
-
-        <!-- Таблица клиентов -->
-        <DataGrid Grid.Row="1" 
-                  AutoGenerateColumns="False"
-                  Name="DataGridClients"
-                  Style="{StaticResource ModernDataGrid}">
-
+        <DataGrid Grid.Row="0" Name="DataGridClients" 
+          AutoGenerateColumns="False" 
+          Style="{StaticResource ModernDataGrid}"
+          IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
                 <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}"/>
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+
+                <!-- Колонка с кнопкой редактирования -->
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать"
+                            Click="EditClient_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+               
             </DataGrid.Columns>
         </DataGrid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
+            <Button Content="Добавить" 
+                    Style="{StaticResource CustomButtonStyle}"
+                    Click="AddClient_Click"
+                    Width="150"/>
+
+            <Button Content="Удалить" 
+                    Style="{StaticResource CustomButtonStyle}"
+                    Click="DeleteClient_Click"
+                    Width="150"
+                    Margin="20 0 0 0"/>
+        </StackPanel>
     </Grid>
 </Page>

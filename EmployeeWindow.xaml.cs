@@ -25,7 +25,16 @@ namespace salon_krasoti
         {
             InitializeComponent();
             _user = user;
+            SetPermissions(user);
             // Инициализация данных сотрудника
+        }
+        private void SetPermissions(UserAccounts user)
+        {
+            if (user.RoleID == 2)
+            {
+                // Скрыть ненужные элементы
+                ProductsButton.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

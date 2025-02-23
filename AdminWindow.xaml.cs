@@ -28,30 +28,34 @@ namespace salon_krasoti
             InitializeComponent();
             _user = user;
             MainFrame.Navigate(new Pages.ClientsPage());
+            SetPermissions();
+        }
+
+        private void SetPermissions()
+        {
+            if (_user.RoleID == 2) // Для сотрудников
+            {
+                ProductsButton.Visibility = Visibility.Collapsed;
+                PromotionsButton.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void NavigateToPage(Page page)
         {
             MainFrame.Navigate(page);
+            MainFrame.NavigationService.RemoveBackEntry();
         }
 
-        private void Clients_Click(object sender, RoutedEventArgs e)
-            => NavigateToPage(new Pages.ClientsPage());
-
-        private void Employees_Click(object sender, RoutedEventArgs e)
-            => NavigateToPage(new Pages.EmployeesPage());
-
-        private void Services_Click(object sender, RoutedEventArgs e)
-            => NavigateToPage(new Pages.ServicesPage());
-
-        private void Products_Click(object sender, RoutedEventArgs e)
-            => NavigateToPage(new Pages.ProductsPage());
-
-        private void Appointments_Click(object sender, RoutedEventArgs e)
-            => NavigateToPage(new Pages.AppointmentsPage());
-
-        private void Promotions_Click(object sender, RoutedEventArgs e)
-            => NavigateToPage(new Pages.PromotionsPage());
+        // Обработчики кнопок
+        private void Clients_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.ClientsPage());
+        private void Employees_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.EmployeesPage());
+        private void Services_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.ServicesPage());
+        private void Products_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.ProductsPage());
+        private void Appointments_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.AppointmentsPage());
+        private void Payments_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.PaymentsPage());
+        private void Sales_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.SalesPage());
+        private void Reviews_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.ReviewsPage());
+        private void Promotions_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.PromotionsPage());
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {

@@ -165,7 +165,6 @@
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="Margin" Value="10"/>
         <Setter Property="FontSize" Value="14"/>
-
         <Setter Property="RowHeaderWidth" Value="0"/>
         <Setter Property="HeadersVisibility" Value="Column"/>
 
@@ -176,6 +175,32 @@
                     <Setter Property="Foreground" Value="White"/>
                     <Setter Property="FontWeight" Value="Bold"/>
                     <Setter Property="Padding" Value="10"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Стили для DataGrid -->
+    <Style x:Key="LockedDataGrid" TargetType="DataGrid">
+        <Setter Property="Background" Value="#fadbc8"/>
+        <Setter Property="BorderBrush" Value="#800000"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="RowHeaderWidth" Value="0"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="CanUserResizeColumns" Value="False"/>
+        <Setter Property="CanUserReorderColumns" Value="False"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+
+        <Setter Property="ColumnHeaderStyle">
+            <Setter.Value>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#800000"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Padding" Value="10"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 </Style>
             </Setter.Value>
         </Setter>

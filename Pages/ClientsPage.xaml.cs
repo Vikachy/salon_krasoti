@@ -25,5 +25,83 @@ namespace salon_krasoti.Pages
             InitializeComponent();
             DataGridClients.ItemsSource = Entities.GetContext().Clients.ToList();
         }
+
+        private void AddClient_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Создаем нового клиента
+                var newClient = new Clients
+                {
+                    FirstName = "Новый",
+                    LastName = "Клиент",
+                    Phone = "+70000000000",
+                    Email = "new@example.com",
+                    RoleID = 3
+                };
+
+                // Добавляем и сохраняем
+                Entities.GetContext().Clients.Add(newClient);
+                Entities.GetContext().SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при добавлении: {ex.Message}", "Ошибка",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void EditClient_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+
+        private void DeleteClient_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGridClients.SelectedItem is Clients client)
+            {
+                DeleteClient(client);
+            }
+            else
+            {
+                MessageBox.Show("Выберите клиента для удаления!", "Предупреждение",
+                                MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void DeleteClient(Clients client)
+        {
+            var result = MessageBox.Show($"Удалить клиента {client.FirstName} {client.LastName}?",
+                                        "Подтверждение удаления",
+                                        MessageBoxButton.YesNo,
+                                        MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    // Удаляем клиента
+                    Entities.GetContext().Clients.Remove(client);
+                    Entities.GetContext().SaveChanges();
+                }
+                catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+                {
+                    MessageBox.Show($"Невозможно удалить клиента: {ex.InnerException?.InnerException?.Message}",
+                                    "Ошибка",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+                }
+            }
+        }
     }
+
 }
+

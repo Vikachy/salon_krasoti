@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:salon_krasoti"
         mc:Ignorable="d"
         Title="AdminWindow" Height="800" Width="1300" 
-        Style="{StaticResource AdminWindowStyle}">
+        Style="{StaticResource AdminWindowStyle}"
+        WindowState="Maximized">
+
     <Border>
         <Border.Background>
             <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
@@ -17,19 +19,16 @@
 
         <DockPanel>
             <StackPanel DockPanel.Dock="Left" Style="{StaticResource StackPanelAdmin}">
-
                 <Button Content="Клиенты" Style="{StaticResource MenuButtonStyle}" Click="Clients_Click"/>
-
                 <Button Content="Сотрудники" Style="{StaticResource MenuButtonStyle}" Click="Employees_Click"/>
-
                 <Button Content="Услуги" Style="{StaticResource MenuButtonStyle}" Click="Services_Click"/>
-
-                <Button Content="Продукты" Style="{StaticResource MenuButtonStyle}" Click="Products_Click"/>
-
+                <Button x:Name="ProductsButton" Content="Продукты" Style="{StaticResource MenuButtonStyle}" Click="Products_Click"/>
                 <Button Content="Записи" Style="{StaticResource MenuButtonStyle}" Click="Appointments_Click"/>
-
-                <Button Content="Акции"  Style="{StaticResource MenuButtonStyle}"  Click="Promotions_Click"/>
-
+                <Button Content="Платежи" Style="{StaticResource MenuButtonStyle}" Click="Payments_Click"/>
+                <Button Content="Продажи" Style="{StaticResource MenuButtonStyle}" Click="Sales_Click"/>
+                <Button Content="Отзывы" Style="{StaticResource MenuButtonStyle}" Click="Reviews_Click"/>
+                <Button x:Name="PromotionsButton" Content="Акции" Style="{StaticResource MenuButtonStyle}" Click="Promotions_Click"/>
+                <Button x:Name="ReportsButton" Content="Отчеты" Style="{StaticResource MenuButtonStyle}" Click="Reports_Click"/>
                 <Button Content="Выйти" Style="{StaticResource LogoutButtonStyle}" Click="Logout_Click"/>
             </StackPanel>
 

@@ -28,28 +28,7 @@ namespace salon_krasoti.Pages
 
         private void AddClient_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                // Создаем нового клиента
-                var newClient = new Clients
-                {
-                    FirstName = "Новый",
-                    LastName = "Клиент",
-                    Phone = "+70000000000",
-                    Email = "new@example.com",
-                    RoleID = 3
-                };
-
-                // Добавляем и сохраняем
-                Entities.GetContext().Clients.Add(newClient);
-                Entities.GetContext().SaveChanges();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при добавлении: {ex.Message}", "Ошибка",
-                                MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            
         }
 
         private void EditClient_Click(object sender, RoutedEventArgs e)

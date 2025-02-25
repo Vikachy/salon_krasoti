@@ -16,19 +16,13 @@ using System.Windows.Shapes;
 namespace salon_krasoti.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для PromotionsPage.xaml
+    /// Логика взаимодействия для ReportsPage.xaml
     /// </summary>
-    public partial class PromotionsPage : Page
+    public partial class ReportsPage : Page
     {
-        public PromotionsPage()
+        public ReportsPage()
         {
             InitializeComponent();
-            DataGridPromotions.ItemsSource = Entities.GetContext().Promotions.ToList();
-        }
-
-        private void AddPromotion_Click(object sender, RoutedEventArgs e)
-        {
-            // Логика добавления акции
         }
     }
 }

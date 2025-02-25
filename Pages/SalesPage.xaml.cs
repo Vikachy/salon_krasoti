@@ -23,6 +23,12 @@ namespace salon_krasoti.Pages
         public SalesPage()
         {
             InitializeComponent();
+            DataGridSales.ItemsSource = Entities.GetContext().Sales.ToList();
+        }
+
+        private void AddSale_Click(object sender, RoutedEventArgs e)
+        {
+            // Логика добавления продажи
         }
     }
 }

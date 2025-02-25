@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,22 @@ namespace salon_krasoti.Pages
         public AppointmentsPage()
         {
             InitializeComponent();
+            DataGridAppointments.ItemsSource = Entities.GetContext().Appointments.ToList();
+        }
+
+        private void AddAppointment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditAppointment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

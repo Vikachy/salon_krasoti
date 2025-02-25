@@ -24,17 +24,26 @@ namespace salon_krasoti
         public EmployeeWindow(UserAccounts user)
         {
             InitializeComponent();
-            _user = user;
-            SetPermissions(user);
-            // Инициализация данных сотрудника
+            _user = user; // Инициализация данных сотрудника
+            MainFrame.Navigate(new Pages.AppointmentsPage());
         }
-        private void SetPermissions(UserAccounts user)
+        private void NavigateToPage(Page page)
         {
-            if (user.RoleID == 2)
-            {
-                // Скрыть ненужные элементы
-                ProductsButton.Visibility = Visibility.Collapsed;
-            }
+            MainFrame.Navigate(page);
+            MainFrame.NavigationService.RemoveBackEntry();
+        }
+
+        // Обработчики кнопок
+
+        private void Appointments_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.AppointmentsPage());
+        private void Sales_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.SalesPage());
+        private void Products_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.ProductsPage());
+
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Close();
         }
     }
 }

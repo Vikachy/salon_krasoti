@@ -23,6 +23,12 @@ namespace salon_krasoti.Pages
         public ReviewsPage()
         {
             InitializeComponent();
+            DataGridReviews.ItemsSource = Entities.GetContext().Reviews.ToList();
+        }
+
+        private void AddReview_Click(object sender, RoutedEventArgs e)
+        {
+            // Логика добавления отзыва
         }
     }
 }

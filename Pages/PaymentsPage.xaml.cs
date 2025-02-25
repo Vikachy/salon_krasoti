@@ -23,6 +23,12 @@ namespace salon_krasoti.Pages
         public PaymentsPage()
         {
             InitializeComponent();
+            DataGridPayments.ItemsSource = Entities.GetContext().Payments.ToList();
+        }
+
+        private void AddPayment_Click(object sender, RoutedEventArgs e)
+        {
+            // Логика добавления платежа
         }
     }
 }

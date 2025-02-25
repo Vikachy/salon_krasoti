@@ -28,16 +28,6 @@ namespace salon_krasoti
             InitializeComponent();
             _user = user;
             MainFrame.Navigate(new Pages.ClientsPage());
-            SetPermissions();
-        }
-
-        private void SetPermissions()
-        {
-            if (_user.RoleID == 2) // Для сотрудников
-            {
-                ProductsButton.Visibility = Visibility.Collapsed;
-                PromotionsButton.Visibility = Visibility.Collapsed;
-            }
         }
 
         private void NavigateToPage(Page page)
@@ -56,6 +46,7 @@ namespace salon_krasoti
         private void Sales_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.SalesPage());
         private void Reviews_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.ReviewsPage());
         private void Promotions_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.PromotionsPage());
+        private void Reports_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.ReportsPage());
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {

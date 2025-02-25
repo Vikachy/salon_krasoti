@@ -7,8 +7,40 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AppointmentsPage">
+    <Grid Style="{StaticResource PageGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-    <Grid>
-        
+        <DataGrid Grid.Row="0" Name="DataGridAppointments" 
+                  Style="{StaticResource ModernDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Клиент" Binding="{Binding Client.FullName}"/>
+                <DataGridTextColumn Header="Сотрудник" Binding="{Binding Employee.FullName}"/>
+                <DataGridTextColumn Header="Услуга" Binding="{Binding Service.ServiceName}"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding AppointmentDateTime}"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
+
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать"
+                                    Click="EditAppointment_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="1" Style="{StaticResource ButtonPanelStyle}">
+            <Button Content="Добавить" 
+                    Style="{StaticResource ActionButtonStyle}"
+                    Click="AddAppointment_Click"/>
+
+            <Button Content="Удалить" 
+                    Style="{StaticResource ActionButtonStyle}"
+                    Click="DeleteAppointment_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

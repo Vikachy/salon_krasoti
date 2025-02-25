@@ -7,8 +7,39 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EmployeesPage">
+    <Grid Style="{StaticResource PageGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-    <Grid>
-        
+        <DataGrid Grid.Row="0" Name="DataGridEmployees" 
+                  Style="{StaticResource ModernDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Должность" Binding="{Binding Position}"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}"/>
+
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать"
+                                    Click="EditEmployee_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="1" Style="{StaticResource ButtonPanelStyle}">
+            <Button Content="Добавить" 
+                    Style="{StaticResource ActionButtonStyle}"
+                    Click="AddEmployee_Click"/>
+
+            <Button Content="Удалить" 
+                    Style="{StaticResource ActionButtonStyle}"
+                    Click="DeleteEmployee_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

@@ -25,7 +25,24 @@ namespace salon_krasoti
         {
             InitializeComponent();
             _user = user;
-            // Инициализация данных клиента
+            MainFrame.Navigate(new Pages.AppointmentsPage());
+        }
+        private void NavigateToPage(Page page)
+        {
+            MainFrame.Navigate(page);
+            MainFrame.NavigationService.RemoveBackEntry();
+        }
+
+        // Обработчики кнопок
+        private void Appointments_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.AppointmentsPage());
+        private void Services_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.ServicesPage());
+        private void MyReviews_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.ReviewsPage());
+
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Close();
         }
     }
 }

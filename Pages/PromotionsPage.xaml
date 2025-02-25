@@ -7,8 +7,29 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PromotionsPage">
+    <Grid Style="{StaticResource PageGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-    <Grid>
-        
+        <DataGrid Grid.Row="0" Name="DataGridPromotions" 
+                  AutoGenerateColumns="False" 
+                  Style="{StaticResource ModernDataGrid}"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название" Binding="{Binding PromotionName}"/>
+                <DataGridTextColumn Header="Скидка (%)" Binding="{Binding DiscountPercentage}"/>
+                <DataGridTextColumn Header="Начало" Binding="{Binding StartDate}"/>
+                <DataGridTextColumn Header="Окончание" Binding="{Binding EndDate}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
+            <Button Content="Добавить" 
+                    Style="{StaticResource CustomButtonStyle}"
+                    Click="AddPromotion_Click"
+                    Width="150"/>
+        </StackPanel>
     </Grid>
 </Page>

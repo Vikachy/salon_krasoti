@@ -23,6 +23,12 @@ namespace salon_krasoti.Pages
         public ServicesPage()
         {
             InitializeComponent();
+            DataGridServices.ItemsSource = Entities.GetContext().Services.ToList();
+        }
+
+        private void AddService_Click(object sender, RoutedEventArgs e)
+        {
+            // Логика добавления услуги
         }
     }
 }

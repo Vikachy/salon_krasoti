@@ -7,14 +7,17 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ReviewsPage">
-
-    <Grid Style="{StaticResource PageGridStyle}">
+<Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <!-- Заголовок страницы -->
+        <TextBlock Grid.Row="0" Text="Страница отзывов" Style="{StaticResource PageTitleStyle}"/>
 
-        <DataGrid Grid.Row="0" Name="DataGridReviews" 
+        <!-- Таблица отзывов -->
+        <DataGrid Grid.Row="1" Name="DataGridReviews" 
                   AutoGenerateColumns="False" 
                   Style="{StaticResource ModernDataGrid}"
                   IsReadOnly="True">
@@ -25,11 +28,11 @@
                 <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"/>
             </DataGrid.Columns>
         </DataGrid>
-
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
             <Button Content="Добавить" 
-                    Style="{StaticResource ActionButtonStyle}"
-                    Click="AddReview_Click"/>
+            Style="{StaticResource ActionButtonStyle}"
+            Click="AddReview_Click"/>
         </StackPanel>
+
     </Grid>
 </Page>

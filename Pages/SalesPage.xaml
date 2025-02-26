@@ -10,26 +10,30 @@
 
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" Name="DataGridSales" 
+        <!-- Заголовок страницы -->
+        <TextBlock Grid.Row="0" Text="Страница продаж" Style="{StaticResource PageTitleStyle}"/>
+
+        <!-- Таблица продаж -->
+        <DataGrid Grid.Row="1" Name="DataGridSales" 
                   AutoGenerateColumns="False" 
                   Style="{StaticResource ModernDataGrid}"
                   IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Сотрудник" Binding="{Binding Employee.FullName}"/>
                 <DataGridTextColumn Header="Услуга" Binding="{Binding Service.ServiceName}"/>
-                <DataGridTextColumn Header="Дата продажи" Binding="{Binding SaleDate}"/>
+                <DataGridTextColumn Header="Дата продажи" Binding="{Binding SaleDate, StringFormat={}{0:dd/MM/yyyy HH:mm}}"/>
                 <DataGridTextColumn Header="Количество" Binding="{Binding QuantitySold}"/>
             </DataGrid.Columns>
         </DataGrid>
-
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
             <Button Content="Добавить" 
-                    Style="{StaticResource ActionButtonStyle}"
-                    Click="AddSale_Click"/>
+            Style="{StaticResource ActionButtonStyle}"
+            Click="AddSale_Click"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -23,7 +23,26 @@ namespace salon_krasoti.Pages
         public EmployeesPage()
         {
             InitializeComponent();
-            DataGridEmployees.ItemsSource = Entities.GetContext().Employees.ToList();
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            // Загружаем данные из базы и преобразуем их в список анонимных объектов
+            var employees = Entities.GetContext().Employees
+                .AsEnumerable() // Переключаемся на LINQ to Objects
+                .Select(e => new
+                {
+                    FullName = $"{e.FirstName} {e.LastName}", // Формируем ФИО
+                    e.Position,
+                    e.Phone,
+                    e.Email,
+                    HireDate = e.HireDate.ToString("dd/MM/yyyy"), // Форматируем дату
+                    DateOfBirth = e.DateOfBirth.ToString("dd/MM/yyyy") // Форматируем дату
+                })
+                .ToList();
+
+            DataGridEmployees.ItemsSource = employees;
         }
 
         private void AddEmployee_Click(object sender, RoutedEventArgs e)
@@ -31,32 +50,44 @@ namespace salon_krasoti.Pages
             // Логика добавления сотрудника
         }
 
-        private void EditEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            // Логика редактирования сотрудника
-        }
-
         private void DeleteEmployee_Click(object sender, RoutedEventArgs e)
         {
-            if (DataGridEmployees.SelectedItem is Employees employee)
-            {
-                var result = MessageBox.Show($"Удалить сотрудника {employee.FirstName} {employee.LastName}?",
-                                            "Подтверждение удаления",
-                                            MessageBoxButton.YesNo,
-                                            MessageBoxImage.Question);
+            // Получаем выбранный элемент
+            var selectedEmployee = DataGridEmployees.SelectedItem;
 
-                if (result == MessageBoxResult.Yes)
+            if (selectedEmployee != null)
+            {
+                // Используем рефлексию для получения значения свойства FullName
+                var fullName = selectedEmployee.GetType().GetProperty("FullName")?.GetValue(selectedEmployee) as string;
+
+                if (!string.IsNullOrEmpty(fullName))
                 {
-                    try
+                    var result = MessageBox.Show($"Удалить сотрудника {fullName}?",
+                                                "Подтверждение удаления",
+                                                MessageBoxButton.YesNo,
+                                                MessageBoxImage.Question);
+
+                    if (result == MessageBoxResult.Yes)
                     {
-                        Entities.GetContext().Employees.Remove(employee);
-                        Entities.GetContext().SaveChanges();
-                        DataGridEmployees.ItemsSource = Entities.GetContext().Employees.ToList();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
-                                        MessageBoxButton.OK, MessageBoxImage.Error);
+                        try
+                        {
+                            // Находим сотрудника в базе данных
+                            var employee = Entities.GetContext().Employees
+                                .FirstOrDefault(emp => $"{emp.FirstName} {emp.LastName}" == fullName);
+
+                            if (employee != null)
+                            {
+                                // Удаляем сотрудника
+                                Entities.GetContext().Employees.Remove(employee);
+                                Entities.GetContext().SaveChanges();
+                                LoadData(); // Обновляем данные
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
+                                            MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                 }
             }
@@ -66,6 +97,5 @@ namespace salon_krasoti.Pages
                                 MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
     }
 }

@@ -38,15 +38,12 @@
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
             <Button Content="Добавить" 
-                    Style="{StaticResource CustomButtonStyle}"
-                    Click="AddClient_Click"
-                    Width="150"/>
+                    Style="{StaticResource ActionButtonStyle}"
+                    Click="AddClient_Click"/>
 
             <Button Content="Удалить" 
-                    Style="{StaticResource CustomButtonStyle}"
-                    Click="DeleteClient_Click"
-                    Width="150"
-                    Margin="20 0 0 0"/>
+                    Style="{StaticResource ActionButtonStyle}"
+                    Click="DeleteClient_Click"/>
         </StackPanel>
     </Grid>
 </Page>

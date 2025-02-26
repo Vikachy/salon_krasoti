@@ -33,7 +33,10 @@ namespace salon_krasoti.Pages
 
         private void EditProduct_Click(object sender, RoutedEventArgs e)
         {
-            // Логика редактирования продукта
+            if (DataGridProducts.SelectedItem is Products selectedProduct)
+            {
+                // Логика редактирования продукта
+            }
         }
 
         private void DeleteProduct_Click(object sender, RoutedEventArgs e)

@@ -33,7 +33,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Row="1" Style="{StaticResource ButtonPanelStyle}">
+        <StackPanel Grid.Row="1" >
             <Button Content="Добавить" 
                     Style="{StaticResource ActionButtonStyle}"
                     Click="AddAppointment_Click"/>

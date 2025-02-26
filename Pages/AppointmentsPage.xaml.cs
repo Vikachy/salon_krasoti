@@ -24,8 +24,13 @@ namespace salon_krasoti.Pages
         public AppointmentsPage()
         {
             InitializeComponent();
-            DataGridAppointments.ItemsSource = Entities.GetContext().Appointments.ToList();
+            DataGridAppointments.ItemsSource = Entities.GetContext().Appointments
+                .Include(a => a.Client) // Загрузка связанных данных
+                .Include(a => a.Employee) // Загрузка связанных данных
+                .Include(a => a.Service) // Загрузка связанных данных
+                .ToList();
         }
+    
 
         private void AddAppointment_Click(object sender, RoutedEventArgs e)
         {

@@ -9,21 +9,28 @@
       Title="ProductsPage">
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" Name="DataGridProducts" 
-                  Style="{StaticResource ModernDataGrid}">
+        <!-- Заголовок страницы -->
+        <TextBlock Grid.Row="0" Text="Страница продуктов" Style="{StaticResource PageTitleStyle}"/>
+
+        <!-- Таблица продуктов -->
+        <DataGrid Grid.Row="1" Name="DataGridProducts" 
+                  AutoGenerateColumns="False" 
+                  Style="{StaticResource ModernDataGrid}"
+                  IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Binding="{Binding ProductName}"/>
                 <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
                 <DataGridTextColumn Header="Количество" Binding="{Binding StockQuantity}"/>
-
-                <DataGridTemplateColumn Width="*">
+                <DataGridTemplateColumn Header="Действия" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Редактировать"
+                            <Button Content="Редактировать" 
+                                    Style="{StaticResource TableButtonStyle}"
                                     Click="EditProduct_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -31,14 +38,15 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Row="1" Style="{StaticResource ButtonPanelStyle}">
+        <!-- Кнопки управления -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
             <Button Content="Добавить" 
                     Style="{StaticResource ActionButtonStyle}"
                     Click="AddProduct_Click"/>
 
             <Button Content="Удалить" 
-                    Style="{StaticResource ActionButtonStyle}"
-                    Click="DeleteProduct_Click"/>
+                Style="{StaticResource ActionButtonStyle}"
+                Click="DeleteProduct_Click" />
         </StackPanel>
     </Grid>
 </Page>

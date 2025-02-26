@@ -23,7 +23,11 @@ namespace salon_krasoti.Pages
         public SalesPage()
         {
             InitializeComponent();
-            DataGridSales.ItemsSource = Entities.GetContext().Sales.ToList();
+            // Используем строки для указания связанных свойств
+            DataGridSales.ItemsSource = Entities.GetContext().Sales
+                .Include("Employee") // Загрузка связанных данных
+                .Include("Service") // Загрузка связанных данных
+                .ToList();
         }
 
         private void AddSale_Click(object sender, RoutedEventArgs e)

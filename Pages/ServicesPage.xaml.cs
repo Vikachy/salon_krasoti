@@ -30,5 +30,13 @@ namespace salon_krasoti.Pages
         {
             // Логика добавления услуги
         }
+
+        private void EditService_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataGridServices.SelectedItem is Services selectedService)
+            {
+                // Логика редактирования услуги
+            }
+        }
     }
 }

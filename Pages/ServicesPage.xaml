@@ -9,11 +9,16 @@
       Title="ServicesPage">
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" Name="DataGridServices" 
+        <!-- Заголовок страницы -->
+        <TextBlock Grid.Row="0" Text="Страница услуг" Style="{StaticResource PageTitleStyle}"/>
+
+        <!-- Таблица услуг -->
+        <DataGrid Grid.Row="1" Name="DataGridServices" 
                   AutoGenerateColumns="False" 
                   Style="{StaticResource ModernDataGrid}"
                   IsReadOnly="True">
@@ -21,10 +26,20 @@
                 <DataGridTextColumn Header="Название" Binding="{Binding ServiceName}"/>
                 <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
                 <DataGridTextColumn Header="Длительность" Binding="{Binding Duration}"/>
+                <DataGridTemplateColumn Header="Действия" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать" 
+                                    Style="{StaticResource TableButtonStyle}"
+                                    Click="EditService_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
+        <!-- Кнопки управления -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
             <Button Content="Добавить" 
                     Style="{StaticResource ActionButtonStyle}"
                     Click="AddService_Click"/>

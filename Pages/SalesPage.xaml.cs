@@ -23,16 +23,32 @@ namespace salon_krasoti.Pages
         public SalesPage()
         {
             InitializeComponent();
-            // Используем строки для указания связанных свойств
-            DataGridSales.ItemsSource = Entities.GetContext().Sales
-                .Include("Employee") // Загрузка связанных данных
-                .Include("Service") // Загрузка связанных данных
-                .ToList();
+            LoadSales();
+        }
+
+        private void LoadSales()
+        {
+            // Используем LINQ-запрос для загрузки данных
+            var sales = from sale in Entities.GetContext().Sales
+                        join employee in Entities.GetContext().Employees on sale.EmployeeID equals employee.EmployeeID
+                        join service in Entities.GetContext().Services on sale.ServiceID equals service.ServiceID
+                        select new
+                        {
+                            SaleID = sale.SaleID,
+                            EmployeeName = employee.FirstName + " " + employee.LastName,
+                            ServiceName = service.ServiceName,
+                            SaleDate = sale.SaleDate,
+                            QuantitySold = sale.QuantitySold
+                        };
+
+            // Привязываем данные к DataGrid
+            DataGridSales.ItemsSource = sales.ToList();
         }
 
         private void AddSale_Click(object sender, RoutedEventArgs e)
         {
             // Логика добавления продажи
+            MessageBox.Show("Добавление продажи");
         }
     }
 }

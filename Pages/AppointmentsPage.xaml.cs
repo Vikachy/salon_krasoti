@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,13 +25,30 @@ namespace salon_krasoti.Pages
         public AppointmentsPage()
         {
             InitializeComponent();
-            DataGridAppointments.ItemsSource = Entities.GetContext().Appointments
-                .Include(a => a.Client) // Загрузка связанных данных
-                .Include(a => a.Employee) // Загрузка связанных данных
-                .Include(a => a.Service) // Загрузка связанных данных
-                .ToList();
+            LoadAppointments();
         }
-    
+
+        private void LoadAppointments()
+        {
+            // Используем LINQ-запрос для загрузки данных
+            var appointments = from appointment in Entities.GetContext().Appointments
+                               join client in Entities.GetContext().Clients on appointment.ClientID equals client.ClientID
+                               join employee in Entities.GetContext().Employees on appointment.EmployeeID equals employee.EmployeeID
+                               join service in Entities.GetContext().Services on appointment.ServiceID equals service.ServiceID
+                               select new
+                               {
+                                   AppointmentID = appointment.AppointmentID,
+                                   ClientName = client.FirstName + " " + client.LastName,
+                                   EmployeeName = employee.FirstName + " " + employee.LastName,
+                                   ServiceName = service.ServiceName,
+                                   AppointmentDateTime = appointment.AppointmentDateTime,
+                                   Status = appointment.Status
+                               };
+
+            // Привязываем данные к DataGrid
+            DataGridAppointments.ItemsSource = appointments.ToList();
+        }
+
 
         private void AddAppointment_Click(object sender, RoutedEventArgs e)
         {

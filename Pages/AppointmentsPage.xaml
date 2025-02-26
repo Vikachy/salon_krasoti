@@ -9,38 +9,47 @@
       Title="AppointmentsPage">
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" Name="DataGridAppointments" 
-                  Style="{StaticResource ModernDataGrid}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Клиент" Binding="{Binding Client.FullName}"/>
-                <DataGridTextColumn Header="Сотрудник" Binding="{Binding Employee.FullName}"/>
-                <DataGridTextColumn Header="Услуга" Binding="{Binding Service.ServiceName}"/>
-                <DataGridTextColumn Header="Дата" Binding="{Binding AppointmentDateTime}"/>
-                <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
+        <!-- Заголовок страницы -->
+        <TextBlock Grid.Row="0" Text="Страница записей" 
+                   Style="{StaticResource PageTitleStyle}" />
 
-                <DataGridTemplateColumn Width="*">
+        <!-- Таблица записей -->
+        <DataGrid Grid.Row="1" Name="DataGridAppointments"
+                  Style="{StaticResource ModernDataGrid}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Клиент" Binding="{Binding ClientName}" Width="*" />
+                <DataGridTextColumn Header="Сотрудник" Binding="{Binding EmployeeName}" Width="*" />
+                <DataGridTextColumn Header="Услуга" Binding="{Binding ServiceName}" Width="*" />
+                <DataGridTextColumn Header="Дата" Binding="{Binding AppointmentDateTime}" Width="*" />
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*" />
+
+                <DataGridTemplateColumn Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Редактировать"
-                                    Click="EditAppointment_Click"/>
+                                    Style="{StaticResource EditButtonStyle}"
+                                    Click="EditAppointment_Click" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Row="1" >
-            <Button Content="Добавить" 
+        <!-- Кнопки управления -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Добавить"
                     Style="{StaticResource ActionButtonStyle}"
-                    Click="AddAppointment_Click"/>
-
-            <Button Content="Удалить" 
+                    Click="AddAppointment_Click" />
+            <Button Content="Удалить"
                     Style="{StaticResource ActionButtonStyle}"
-                    Click="DeleteAppointment_Click"/>
+                    Click="DeleteAppointment_Click" />
         </StackPanel>
     </Grid>
 </Page>

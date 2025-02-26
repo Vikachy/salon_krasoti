@@ -45,6 +45,11 @@ namespace salon_krasoti.Pages
             DataGridEmployees.ItemsSource = employees;
         }
 
+        private void EditEmployee_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void AddEmployee_Click(object sender, RoutedEventArgs e)
         {
             // Логика добавления сотрудника

@@ -8,14 +8,14 @@
 
     <Border CornerRadius="30">
         <Border.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#FFE8F5E9" Offset="0"/>
-                <GradientStop Color="#FFC8E6C9" Offset="0.7"/>
+            <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                <GradientStop Color="#F19CBB" Offset="0.75"/>
+                <GradientStop Color="#fadbc8" Offset="0.3"/>
             </LinearGradientBrush>
         </Border.Background>
 
         <DockPanel>
-            <StackPanel DockPanel.Dock="Left" Width="200" Background="#FF4CAF50">
+            <StackPanel DockPanel.Dock="Left" Width="200" Background="#f2ddc6">
                 <Button Content="Мои записи" Style="{StaticResource MenuButtonStyle}" Click="Appointments_Click"/>
                 <Button Content="Продажи" Style="{StaticResource MenuButtonStyle}" Click="Sales_Click"/>
                 <Button x:Name="ProductsButton" Content="Продукты" Style="{StaticResource MenuButtonStyle}" Click="Products_Click"/>

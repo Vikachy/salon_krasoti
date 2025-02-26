@@ -15,7 +15,7 @@
         </Border.Background>
 
         <DockPanel>
-            <StackPanel DockPanel.Dock="Left" Width="200" Background="#FF9C27B0">
+            <StackPanel DockPanel.Dock="Left" Width="200" Background="#f2ddc6">
                 <Button Content="Записи" Style="{StaticResource MenuButtonStyle}" Click="Appointments_Click"/>
                 <Button Content="Услуги" Style="{StaticResource MenuButtonStyle}" Click="Services_Click"/>
                 <Button Content="Отзывы" Style="{StaticResource MenuButtonStyle}" Click="MyReviews_Click"/>

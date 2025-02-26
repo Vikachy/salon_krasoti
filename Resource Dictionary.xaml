@@ -204,4 +204,43 @@
         <Setter Property="Margin" Value="0 0 0 20"/>
     </Style>
 
+    <!-- Стиль для кнопки редактирования -->
+    <Style x:Key="EditButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="#FFF2D7D9" />
+        <Setter Property="Foreground" Value="#FF5C4033" />
+        <Setter Property="Padding" Value="8,3" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                        CornerRadius="5"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FFE6B8AF" />
+                            <!-- Цвет при наведении -->
+                            <Setter Property="Foreground" Value="#FF3F2D24" />
+                            <!-- Цвет текста при наведении -->
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#FFDAB3B3" />
+                            <!-- Цвет при нажатии -->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

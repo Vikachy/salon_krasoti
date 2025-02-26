@@ -7,32 +7,51 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ReviewsPage">
-<Grid Style="{StaticResource PageGridStyle}">
+
+    <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
         <!-- Заголовок страницы -->
-        <TextBlock Grid.Row="0" Text="Страница отзывов" Style="{StaticResource PageTitleStyle}"/>
+        <TextBlock Grid.Row="0" Text="Страница отзывов" 
+                   Style="{StaticResource PageTitleStyle}" />
 
         <!-- Таблица отзывов -->
-        <DataGrid Grid.Row="1" Name="DataGridReviews" 
-                  AutoGenerateColumns="False" 
+        <DataGrid Grid.Row="1" Name="DataGridReviews"
                   Style="{StaticResource ModernDataGrid}"
+                  AutoGenerateColumns="False"
                   IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Клиент" Binding="{Binding Client.FullName}"/>
-                <DataGridTextColumn Header="Услуга" Binding="{Binding Service.ServiceName}"/>
-                <DataGridTextColumn Header="Оценка" Binding="{Binding Rating}"/>
-                <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"/>
+                <DataGridTextColumn Header="ID отзыва" Binding="{Binding ReviewID}" Width="*" />
+                <DataGridTextColumn Header="Клиент" Binding="{Binding ClientName}" Width="*" />
+                <DataGridTextColumn Header="Услуга" Binding="{Binding ServiceName}" Width="*" />
+                <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}" Width="*" />
+                <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" Width="*" />
+
+                <!-- Кнопка редактирования -->
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать" 
+                                    Style="{StaticResource EditButtonStyle}"
+                                    Click="EditReview_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
-            <Button Content="Добавить" 
-            Style="{StaticResource ActionButtonStyle}"
-            Click="AddReview_Click"/>
-        </StackPanel>
 
+        <!-- Кнопки управления -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 15">
+            <Button Content="Добавить"
+                    Style="{StaticResource ActionButtonStyle}"
+                    Click="AddReview_Click" />
+            <Button Content="Удалить"
+                    Style="{StaticResource ActionButtonStyle}"
+                    Click="DeleteReview_Click" />
+        </StackPanel>
     </Grid>
 </Page>

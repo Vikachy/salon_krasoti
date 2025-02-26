@@ -30,7 +30,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Редактировать" 
-                                    Style="{StaticResource TableButtonStyle}"
+                                    Style="{StaticResource EditButtonStyle}"
                                     Click="EditProduct_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

@@ -23,10 +23,53 @@ namespace salon_krasoti.Pages
         public PaymentsPage()
         {
             InitializeComponent();
-            DataGridPayments.ItemsSource = Entities.GetContext().Payments
-                        .Include("Service") 
-                        .ToList();
+            LoadPayments();
         }
 
+        private void LoadPayments()
+        {
+            // Используем LINQ-запрос для загрузки данных
+            var payments = from payment in Entities.GetContext().Payments
+                           join service in Entities.GetContext().Services on payment.ServiceID equals service.ServiceID
+                           select new
+                           {
+                               PaymentID = payment.PaymentID,
+                               Service = service,
+                               Amount = payment.Amount,
+                               PaymentDate = payment.PaymentDate
+                           };
+
+            // Привязываем данные к DataGrid
+            DataGridPayments.ItemsSource = payments.ToList();
+        }
+
+        private void AddPayment_Click(object sender, RoutedEventArgs e)
+        {
+            // Логика добавления платежа
+            MessageBox.Show("Добавление платежа");
+        }
+
+        private void DeletePayment_Click(object sender, RoutedEventArgs e)
+        {
+            // Логика удаления платежа
+            var selectedPayment = DataGridPayments.SelectedItem as dynamic;
+            if (selectedPayment == null)
+            {
+                MessageBox.Show("Выберите платеж для удаления.");
+                return;
+            }
+
+            // Удаляем платеж
+            int paymentId = selectedPayment.PaymentID;
+            var paymentToDelete = Entities.GetContext().Payments.Find(paymentId);
+            if (paymentToDelete != null)
+            {
+                Entities.GetContext().Payments.Remove(paymentToDelete);
+                Entities.GetContext().SaveChanges();
+                LoadPayments(); // Обновляем данные
+            }
+        }
     }
+
 }
+

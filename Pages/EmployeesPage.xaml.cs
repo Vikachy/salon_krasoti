@@ -1,4 +1,5 @@
-﻿using System;
+﻿using salon_krasoti.PagesEdit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,31 +29,40 @@ namespace salon_krasoti.Pages
 
         private void LoadData()
         {
-            // Загружаем данные из базы и преобразуем их в список анонимных объектов
             var employees = Entities.GetContext().Employees
-                .AsEnumerable() // Переключаемся на LINQ to Objects
-                .Select(e => new
-                {
-                    FullName = $"{e.FirstName} {e.LastName}", // Формируем ФИО
-                    e.Position,
-                    e.Phone,
-                    e.Email,
-                    HireDate = e.HireDate.ToString("dd/MM/yyyy"), // Форматируем дату
-                    DateOfBirth = e.DateOfBirth.ToString("dd/MM/yyyy") // Форматируем дату
-                })
-                .ToList();
+                            .ToList() 
+                            .Select(e => new
+                            {
+                                FullName = $"{e.FirstName} {e.LastName}", 
+                                e.Position,
+                                e.Phone,
+                                e.Email,
+                                HireDate = e.HireDate.ToString("dd/MM/yyyy"), 
+                                DateOfBirth = e.DateOfBirth.ToString("dd/MM/yyyy") 
+                            })
+                            .ToList();
 
             DataGridEmployees.ItemsSource = employees;
         }
-
         private void EditEmployee_Click(object sender, RoutedEventArgs e)
         {
+            // Получаем выбранного сотрудника
+            var selectedEmployee = DataGridEmployees.SelectedItem as Employees;
 
+            if (selectedEmployee != null)
+            {
+                // Переход на страницу редактирования сотрудника
+                NavigationService?.Navigate(new PagesEdit.AddEditEmployeePage(selectedEmployee));
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите сотрудника для редактирования.");
+            }
         }
 
         private void AddEmployee_Click(object sender, RoutedEventArgs e)
         {
-            // Логика добавления сотрудника
+            NavigationService?.Navigate(new PagesEdit.AddEditEmployeePage(null));
         }
 
         private void DeleteEmployee_Click(object sender, RoutedEventArgs e)
@@ -100,6 +110,16 @@ namespace salon_krasoti.Pages
             {
                 MessageBox.Show("Выберите сотрудника для удаления!", "Предупреждение",
                                 MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                // Обновляем данные из базы данных
+                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                LoadData();
             }
         }
     }

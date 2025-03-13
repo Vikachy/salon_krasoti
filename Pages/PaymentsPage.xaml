@@ -28,6 +28,17 @@
                 <DataGridTextColumn Header="Услуга" Binding="{Binding Service.ServiceName}" Width="*" />
                 <DataGridTextColumn Header="Сумма" Binding="{Binding Amount}" Width="*" />
                 <DataGridTextColumn Header="Дата платежа" Binding="{Binding PaymentDate}" Width="*" />
+
+                <!-- Кнопка редактирования -->
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать"
+                                    Style="{StaticResource EditButtonStyle}"
+                                    Click="EditPayment_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 

@@ -28,27 +28,35 @@ namespace salon_krasoti.Pages
 
         private void LoadSales()
         {
-            // Используем LINQ-запрос для загрузки данных
-            var sales = from sale in Entities.GetContext().Sales
-                        join employee in Entities.GetContext().Employees on sale.EmployeeID equals employee.EmployeeID
-                        join service in Entities.GetContext().Services on sale.ServiceID equals service.ServiceID
-                        select new
-                        {
-                            SaleID = sale.SaleID,
-                            EmployeeName = employee.FirstName + " " + employee.LastName,
-                            ServiceName = service.ServiceName,
-                            SaleDate = sale.SaleDate,
-                            QuantitySold = sale.QuantitySold
-                        };
+            // Загрузка данных с использованием навигационных свойств
+            var sales = Entities.GetContext().Sales
+                .Select(s => new
+                {
+                    SaleID = s.SaleID,
+                    EmployeeName = s.Employees.FirstName + " " + s.Employees.LastName, 
+                    ServiceName = s.Services.ServiceName, 
+                    SaleDate = s.SaleDate,
+                    QuantitySold = s.QuantitySold
+                })
+                .ToList();
 
-            // Привязываем данные к DataGrid
-            DataGridSales.ItemsSource = sales.ToList();
+            DataGridSales.ItemsSource = sales;
         }
 
-        private void AddSale_Click(object sender, RoutedEventArgs e)
+        private void EditSale_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+            private void AddSale_Click(object sender, RoutedEventArgs e)
         {
             // Логика добавления продажи
             MessageBox.Show("Добавление продажи");
+        }
+
+        private void DeleteSale_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

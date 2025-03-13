@@ -39,8 +39,12 @@ namespace salon_krasoti.Pages
                                PaymentDate = payment.PaymentDate
                            };
 
-            // Привязываем данные к DataGrid
             DataGridPayments.ItemsSource = payments.ToList();
+        }
+
+        private void EditPayment_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void AddPayment_Click(object sender, RoutedEventArgs e)
@@ -51,23 +55,7 @@ namespace salon_krasoti.Pages
 
         private void DeletePayment_Click(object sender, RoutedEventArgs e)
         {
-            // Логика удаления платежа
-            var selectedPayment = DataGridPayments.SelectedItem as dynamic;
-            if (selectedPayment == null)
-            {
-                MessageBox.Show("Выберите платеж для удаления.");
-                return;
-            }
-
-            // Удаляем платеж
-            int paymentId = selectedPayment.PaymentID;
-            var paymentToDelete = Entities.GetContext().Payments.Find(paymentId);
-            if (paymentToDelete != null)
-            {
-                Entities.GetContext().Payments.Remove(paymentToDelete);
-                Entities.GetContext().SaveChanges();
-                LoadPayments(); // Обновляем данные
-            }
+           
         }
     }
 

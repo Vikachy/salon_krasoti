@@ -126,6 +126,7 @@
           <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PasswordHash" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="RoleID" Type="int" />
+          <Property Name="ClientID" Type="int" />
         </EntityType>
         <Association Name="FK__Appointme__Clien__6477ECF3">
           <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
@@ -283,6 +284,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserAccounts_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="UserAccounts">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище salon_krasotiModelContainer">
           <EntitySet Name="Appointments" EntityType="Self.Appointments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
@@ -348,6 +361,10 @@
             <End Role="Promotions" EntitySet="Promotions" />
             <End Role="Appointments" EntitySet="Appointments" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserAccounts_Clients" Association="Self.FK_UserAccounts_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -384,6 +401,7 @@
           <NavigationProperty Name="Appointments" Relationship="Self.FK__Appointme__Clien__6477ECF3" FromRole="Clients" ToRole="Appointments" />
           <NavigationProperty Name="Roles" Relationship="Self.FK__Clients__RoleID__5CD6CB2B" FromRole="Clients" ToRole="Roles" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK__Reviews__ClientI__73BA3083" FromRole="Clients" ToRole="Reviews" />
+          <NavigationProperty Name="UserAccounts" Relationship="salon_krasotiModel.FK_UserAccounts_Clients" FromRole="Clients" ToRole="UserAccounts" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -500,6 +518,8 @@
           <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RoleID" Type="Int32" />
           <NavigationProperty Name="Roles" Relationship="Self.FK__UserAccou__RoleI__7A672E12" FromRole="UserAccounts" ToRole="Roles" />
+          <Property Name="ClientID" Type="Int32" />
+          <NavigationProperty Name="Client" Relationship="salon_krasotiModel.FK_UserAccounts_Clients" FromRole="UserAccounts" ToRole="Clients" />
         </EntityType>
         <Association Name="FK__Appointme__Clien__6477ECF3">
           <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
@@ -710,6 +730,10 @@
             <End Role="Promotions" EntitySet="Promotions" />
             <End Role="Appointments" EntitySet="Appointments" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserAccounts_Clients" Association="salon_krasotiModel.FK_UserAccounts_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Appointments_Promotions">
           <End Type="salon_krasotiModel.Promotions" Role="Promotions" Multiplicity="0..1" />
@@ -720,6 +744,18 @@
             </Principal>
             <Dependent Role="Appointments">
               <PropertyRef Name="PromotionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAccounts_Clients">
+          <End Type="salon_krasotiModel.Clients" Role="Clients" Multiplicity="0..1" />
+          <End Type="salon_krasotiModel.UserAccounts" Role="UserAccounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="UserAccounts">
+              <PropertyRef Name="ClientID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -856,6 +892,7 @@
           <EntitySetMapping Name="UserAccounts">
             <EntityTypeMapping TypeName="salon_krasotiModel.UserAccounts">
               <MappingFragment StoreEntitySet="UserAccounts">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
@@ -877,7 +914,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />

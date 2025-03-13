@@ -28,7 +28,18 @@ namespace salon_krasoti.Pages
 
         private void AddPromotion_Click(object sender, RoutedEventArgs e)
         {
-            // Логика добавления акции
+
+        }
+
+        private void EditPromotion_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void DeletePromotion_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
+

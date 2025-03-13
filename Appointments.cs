@@ -34,5 +34,9 @@ namespace salon_krasoti
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payments> Payments { get; set; }
         public virtual Promotions Promotions { get; set; }
+
+        public string ClientFullName => Clients != null ? $"{Clients.FirstName} {Clients.LastName}" : string.Empty;
+        public string EmployeeFullName => Employees != null ? $"{Employees.FirstName} {Employees.LastName}" : string.Empty;
+
     }
 }

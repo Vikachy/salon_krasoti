@@ -25,11 +25,22 @@
                   AutoGenerateColumns="False"
                   IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID продажи" Binding="{Binding SaleID}" Width="*" />
+                <DataGridTextColumn Header="ID продажи" Binding="{Binding SaleID}" Width="auto" />
                 <DataGridTextColumn Header="Сотрудник" Binding="{Binding EmployeeName}" Width="*" />
                 <DataGridTextColumn Header="Услуга" Binding="{Binding ServiceName}" Width="*" />
-                <DataGridTextColumn Header="Дата продажи" Binding="{Binding SaleDate}" Width="*" />
+                <DataGridTextColumn Header="Дата продажи" Binding="{Binding SaleDate}" Width="auto" />
                 <DataGridTextColumn Header="Количество" Binding="{Binding QuantitySold}" Width="*" />
+
+                <!-- Кнопка редактирования -->
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать"
+                                    Style="{StaticResource EditButtonStyle}"
+                                    Click="EditSale_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -38,6 +49,9 @@
             <Button Content="Добавить"
                     Style="{StaticResource ActionButtonStyle}"
                     Click="AddSale_Click" />
+            <Button Content="Удалить"
+                    Style="{StaticResource ActionButtonStyle}"
+                    Click="DeleteSale_Click" />
         </StackPanel>
     </Grid>
 </Page>

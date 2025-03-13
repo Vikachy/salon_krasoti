@@ -1,4 +1,5 @@
-﻿using System;
+﻿using salon_krasoti.PagesEdit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,12 +29,20 @@ namespace salon_krasoti.Pages
 
         private void AddClient_Click(object sender, RoutedEventArgs e)
         {
-            
+            NavigationService.Navigate(new PagesEdit.AddEditClientPage(null));
         }
 
         private void EditClient_Click(object sender, RoutedEventArgs e)
         {
-           
+            var selectedClient = DataGridClients.SelectedItem as Clients;
+            if (selectedClient != null)
+            {
+                NavigationService.Navigate(new PagesEdit.AddEditClientPage(selectedClient));
+            }
+            else
+            {
+                MessageBox.Show("Выберите клиента для редактирования.");
+            }
         }
 
 
@@ -78,6 +87,16 @@ namespace salon_krasoti.Pages
                                     MessageBoxButton.OK,
                                     MessageBoxImage.Error);
                 }
+            }
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                // Обновляем данные из базы данных
+                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                DataGridClients.ItemsSource = Entities.GetContext().Clients.ToList();
             }
         }
     }

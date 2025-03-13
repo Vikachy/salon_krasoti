@@ -1,0 +1,47 @@
+﻿<Page x:Class="salon_krasoti.PagesEdit.AddEditEmployeePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:salon_krasoti.PagesEdit"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="AddEditEmployeePage">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FFD1D1" Offset="0"/>
+                <GradientStop Color="#FFC4C4" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Border CornerRadius="15" Background="White" Padding="20" Margin="30">
+            <StackPanel>
+                <TextBlock Text="Имя" Style="{StaticResource LabelStyle}" />
+                <TextBox x:Name="TextBoxFirstName" Style="{StaticResource TextBoxStyle}" />
+
+                <TextBlock Text="Фамилия" Style="{StaticResource LabelStyle}" />
+                <TextBox x:Name="TextBoxLastName" Style="{StaticResource TextBoxStyle}" />
+
+                <TextBlock Text="Должность" Style="{StaticResource LabelStyle}" />
+                <TextBox x:Name="TextBoxPosition" Style="{StaticResource TextBoxStyle}" />
+
+                <TextBlock Text="Телефон" Style="{StaticResource LabelStyle}" />
+                <TextBox x:Name="TextBoxPhone" Style="{StaticResource TextBoxStyle}" />
+
+                <TextBlock Text="Email" Style="{StaticResource LabelStyle}" />
+                <TextBox x:Name="TextBoxEmail" Style="{StaticResource TextBoxStyle}" />
+
+                <TextBlock Text="Дата приема" Style="{StaticResource LabelStyle}" />
+                <DatePicker x:Name="DatePickerHireDate" Style="{StaticResource DatePickerStyle}" />
+
+                <TextBlock Text="Дата рождения" Style="{StaticResource LabelStyle}" />
+                <DatePicker x:Name="DatePickerDateOfBirth" Style="{StaticResource DatePickerStyle}" />
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <Button Content="Сохранить" Click="Save_Click" Style="{StaticResource ActionButtonStyle}" />
+                    <Button Content="Отмена" Click="Cancel_Click" Style="{StaticResource CancelButtonStyle}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:salon_krasoti.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="EmployeesPage">
+      Title="EmployeesPage" IsVisibleChanged="Page_IsVisibleChanged">
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -28,8 +28,8 @@
                 <DataGridTextColumn Header="Должность" Binding="{Binding Position}" />
                 <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" />
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
-                <DataGridTextColumn Header="Дата приема" Binding="{Binding HireDate, StringFormat={}{0:dd/MM/yyyy}}" />
-                <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth, StringFormat={}{0:dd/MM/yyyy}}" />
+                <DataGridTextColumn Header="Дата приема" Binding="{Binding HireDate}" />
+                <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth}" />
 
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>

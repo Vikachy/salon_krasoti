@@ -36,5 +36,7 @@ namespace salon_krasoti
         public virtual Roles Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sales> Sales { get; set; }
+
+        public string EmployeeFullName => $"{FirstName} {LastName}";
     }
 }

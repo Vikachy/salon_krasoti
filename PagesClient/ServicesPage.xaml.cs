@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace salon_krasoti.Pages
+namespace salon_krasoti.PagesClient
 {
     /// <summary>
     /// Логика взаимодействия для ServicesPage.xaml
@@ -24,24 +24,6 @@ namespace salon_krasoti.Pages
         {
             InitializeComponent();
             DataGridServices.ItemsSource = Entities.GetContext().Services.ToList();
-        }
-
-        private void AddService_Click(object sender, RoutedEventArgs e)
-        {
-            // Логика добавления услуги
-        }
-
-        private void EditService_Click(object sender, RoutedEventArgs e)
-        {
-            if (DataGridServices.SelectedItem is Services selectedService)
-            {
-                // Логика редактирования услуги
-            }
-        }
-
-        private void DeleteService_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

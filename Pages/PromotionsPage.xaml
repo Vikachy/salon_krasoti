@@ -9,27 +9,48 @@
       Title="PromotionsPage">
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" Name="DataGridPromotions" 
+        <!-- Заголовок страницы -->
+        <TextBlock Grid.Row="0" Text="Страница акций" 
+                   Style="{StaticResource PageTitleStyle}" />
+
+        <!-- Таблица акций -->
+        <DataGrid Grid.Row="1" Name="DataGridPromotions" 
                   AutoGenerateColumns="False" 
                   Style="{StaticResource ModernDataGrid}"
                   IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Название" Binding="{Binding PromotionName}"/>
-                <DataGridTextColumn Header="Скидка (%)" Binding="{Binding DiscountPercentage}"/>
-                <DataGridTextColumn Header="Начало" Binding="{Binding StartDate}"/>
-                <DataGridTextColumn Header="Окончание" Binding="{Binding EndDate}"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding PromotionName}" Width="*" />
+                <DataGridTextColumn Header="Скидка (%)" Binding="{Binding DiscountPercentage}" Width="*" />
+                <DataGridTextColumn Header="Начало" Binding="{Binding StartDate, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
+                <DataGridTextColumn Header="Окончание" Binding="{Binding EndDate, StringFormat={}{0:dd/MM/yyyy}}" Width="*" />
+
+                <!-- Кнопка редактирования справа от строки -->
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Редактировать"
+                                    Style="{StaticResource EditButtonStyle}"
+                                    Click="EditPromotion_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
+        <!-- Кнопки управления -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
             <Button Content="Добавить" 
-                    Style="{StaticResource CustomButtonStyle}"
-                    Click="AddPromotion_Click"
-                    Width="150"/>
+                    Style="{StaticResource ActionButtonStyle}"
+                    Click="AddPromotion_Click" />
+
+            <Button Content="Удалить" 
+                    Style="{StaticResource ActionButtonStyle}"
+                    Click="DeletePromotion_Click" />
         </StackPanel>
     </Grid>
 </Page>

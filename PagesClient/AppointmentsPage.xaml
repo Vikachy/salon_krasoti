@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:salon_krasoti.PagesClient"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AppointmentsPage">
+      Title="AppointmentsPage" IsVisibleChanged="Page_IsVisibleChanged">
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -32,7 +32,7 @@
         </DataGrid>
 
         <!-- Кнопки управления -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Оставить отзыв" 
                     Style="{StaticResource ActionButtonStyle}"
                     Click="LeaveReview_Click" />

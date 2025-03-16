@@ -20,6 +20,7 @@ namespace salon_krasoti.Pages
     /// </summary>
     public partial class PaymentsPage : Page
     {
+
         public PaymentsPage()
         {
             InitializeComponent();
@@ -28,34 +29,122 @@ namespace salon_krasoti.Pages
 
         private void LoadPayments()
         {
-            // Используем LINQ-запрос для загрузки данных
-            var payments = from payment in Entities.GetContext().Payments
-                           join service in Entities.GetContext().Services on payment.ServiceID equals service.ServiceID
-                           select new
-                           {
-                               PaymentID = payment.PaymentID,
-                               Service = service,
-                               Amount = payment.Amount,
-                               PaymentDate = payment.PaymentDate
-                           };
+            var payments = Entities.GetContext().Payments
+                    .Select(p => new
+                    {
+                        p.PaymentID,
+                        ServiceName = p.Services.ServiceName, 
+                        p.Amount,
+                        p.PaymentDate
+                    })
+                    .ToList();
 
-            DataGridPayments.ItemsSource = payments.ToList();
+            // Логирование для отладки
+            foreach (var payment in payments)
+            {
+                Console.WriteLine($"PaymentID: {payment.PaymentID}, ServiceName: {payment.ServiceName}, Amount: {payment.Amount}, Date: {payment.PaymentDate}");
+            }
+
+            DataGridPayments.ItemsSource = payments;
         }
 
-        private void EditPayment_Click(object sender, RoutedEventArgs e)
+            private void EditPayment_Click(object sender, RoutedEventArgs e)
         {
-
+            var selectedPayment = DataGridPayments.SelectedItem as dynamic; // Используем dynamic для анонимного типа
+            if (selectedPayment != null)
+            {
+                int paymentId = selectedPayment.PaymentID;
+                var payment = Entities.GetContext().Payments.Find(paymentId); // Загружаем полный объект Payments
+                if (payment != null)
+                {
+                    NavigationService.Navigate(new PagesEdit.AddEditPaymentPage(payment));
+                }
+                else
+                {
+                    MessageBox.Show("Платеж не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите платеж для редактирования.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void AddPayment_Click(object sender, RoutedEventArgs e)
         {
-            // Логика добавления платежа
-            MessageBox.Show("Добавление платежа");
+            NavigationService.Navigate(new PagesEdit.AddEditPaymentPage(null));
         }
 
         private void DeletePayment_Click(object sender, RoutedEventArgs e)
         {
-           
+            if (DataGridPayments.SelectedItem is object selectedPayment)
+            {
+                if (selectedPayment.GetType().GetProperty("PaymentID") != null)
+                {
+                    int paymentId = (int)selectedPayment.GetType().GetProperty("PaymentID").GetValue(selectedPayment);
+
+                    try
+                    {
+                        var payment = Entities.GetContext().Payments.Find(paymentId);
+
+                        if (payment != null)
+                        {
+                            var result = MessageBox.Show($"Удалить платеж с ID {paymentId}?",
+                                                        "Подтверждение удаления",
+                                                        MessageBoxButton.YesNo,
+                                                        MessageBoxImage.Question);
+
+                            if (result == MessageBoxResult.Yes)
+                            {
+                                try
+                                {
+                                    Entities.GetContext().Payments.Remove(payment);
+                                    Entities.GetContext().SaveChanges();
+                                    LoadPayments();
+                                    MessageBox.Show("Платеж успешно удален.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                                }
+                                catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+                                {
+                                    MessageBox.Show($"Невозможно удалить платеж: {ex.InnerException?.InnerException?.Message}",
+                                                    "Ошибка",
+                                                    MessageBoxButton.OK,
+                                                    MessageBoxImage.Error);
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Платеж не найден.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при обработке платежа: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Невозможно удалить платеж.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите платеж для удаления.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+    private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                // Обновляем данные из базы данных
+                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                LoadPayments();
+            }
         }
     }
 

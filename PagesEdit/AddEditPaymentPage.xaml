@@ -1,0 +1,47 @@
+﻿<Page x:Class="salon_krasoti.PagesEdit.AddEditPaymentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:salon_krasoti.PagesEdit"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddEditPaymentPage">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FFD1D1" Offset="0"/>
+                <GradientStop Color="#FFC4C4" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Border CornerRadius="15" Background="White" Padding="20" Margin="30">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="600">
+                <TextBlock Text="Добавление/Редактирование платежа" Style="{StaticResource PageTitleStyle}" />
+
+                <TextBlock Text="Запись:" Style="{StaticResource LabelStyle}" />
+                <ComboBox Name="ComboBoxAppointments" 
+                          DisplayMemberPath="AppointmentID" 
+                          SelectedValuePath="AppointmentID" 
+                          Style="{StaticResource ComboBoxStyle}"/>
+
+                <TextBlock Text="Услуга:" Style="{StaticResource LabelStyle}" />
+                <ComboBox Name="ComboBoxServices" 
+                          DisplayMemberPath="ServiceName" 
+                          SelectedValuePath="ServiceID" 
+                          Style="{StaticResource ComboBoxStyle}" 
+                          SelectionChanged="ComboBoxServices_SelectionChanged"/>
+
+                <TextBlock Text="Сумма:" Style="{StaticResource LabelStyle}" />
+                <TextBox Name="TextBoxAmount" Style="{StaticResource TextBoxStyle}" />
+
+                <TextBlock Text="Дата платежа:" Style="{StaticResource LabelStyle}" />
+                <DatePicker Name="DatePickerPaymentDate" Style="{StaticResource DatePickerStyle}" />
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="Сохранить" Click="Save_Click" Style="{StaticResource ActionButtonStyle}"/>
+                    <Button Content="Отмена" Click="Cancel_Click" Style="{StaticResource CancelButtonStyle}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

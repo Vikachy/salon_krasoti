@@ -28,17 +28,65 @@ namespace salon_krasoti.Pages
 
         private void AddPromotion_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new PagesEdit.AddEditPromotionPage(null));
         }
 
         private void EditPromotion_Click(object sender, RoutedEventArgs e)
         {
-            
+            // Получаем выбранную акцию
+            var selectedPromotion = DataGridPromotions.SelectedItem as Promotions;
+
+            if (selectedPromotion != null)
+            {
+                NavigationService.Navigate(new PagesEdit.AddEditPromotionPage(selectedPromotion));
+            }
+            else
+            {
+                MessageBox.Show("Выберите акцию для редактирования.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void DeletePromotion_Click(object sender, RoutedEventArgs e)
         {
-            
+            // Получаем выбранную акцию
+            var selectedPromotion = DataGridPromotions.SelectedItem as Promotions;
+
+            if (selectedPromotion != null)
+            {
+                // Подтверждение удаления
+                var result = MessageBox.Show("Вы уверены, что хотите удалить эту акцию?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        // Удаляем акцию из базы данных
+                        var context = Entities.GetContext();
+                        context.Promotions.Remove(selectedPromotion);
+                        context.SaveChanges();
+
+                        DataGridPromotions.ItemsSource = Entities.GetContext().Promotions.ToList();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при удалении акции: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите акцию для удаления.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                // Обновляем данные из базы данных
+                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                DataGridPromotions.ItemsSource = Entities.GetContext().Promotions.ToList();
+            }
         }
     }
 }

@@ -90,6 +90,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="PagesClient\AddAppointmentPage.xaml.cs">
+      <DependentUpon>AddAppointmentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesClient\AddReviewPage.xaml.cs">
+      <DependentUpon>AddReviewPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PagesClient\AllReviewsPage.xaml.cs">
       <DependentUpon>AllReviewsPage.xaml</DependentUpon>
     </Compile>
@@ -113,6 +119,24 @@
     </Compile>
     <Compile Include="PagesEdit\AddEditEmployeePage.xaml.cs">
       <DependentUpon>AddEditEmployeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesEdit\AddEditPaymentPage.xaml.cs">
+      <DependentUpon>AddEditPaymentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesEdit\AddEditProductPage.xaml.cs">
+      <DependentUpon>AddEditProductPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesEdit\AddEditPromotionPage.xaml.cs">
+      <DependentUpon>AddEditPromotionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesEdit\AddEditReviewPage.xaml.cs">
+      <DependentUpon>AddEditReviewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesEdit\AddEditSalePage.xaml.cs">
+      <DependentUpon>AddEditSalePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesEdit\AddEditServicePage.xaml.cs">
+      <DependentUpon>AddEditServicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AppointmentsPage.xaml.cs">
       <DependentUpon>AppointmentsPage.xaml</DependentUpon>
@@ -202,6 +226,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PagesClient\AddAppointmentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesClient\AddReviewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PagesClient\AllReviewsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -231,6 +263,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PagesEdit\AddEditEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesEdit\AddEditPaymentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesEdit\AddEditProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesEdit\AddEditPromotionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesEdit\AddEditReviewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesEdit\AddEditSalePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesEdit\AddEditServicePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using salon_krasoti.PagesEdit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,20 +29,54 @@ namespace salon_krasoti.Pages
 
         private void AddService_Click(object sender, RoutedEventArgs e)
         {
-            // Логика добавления услуги
+            NavigationService.Navigate(new PagesEdit.AddEditServicePage(null));
         }
 
         private void EditService_Click(object sender, RoutedEventArgs e)
         {
             if (DataGridServices.SelectedItem is Services selectedService)
             {
-                // Логика редактирования услуги
+                NavigationService.Navigate(new PagesEdit.AddEditServicePage(selectedService));
+            }
+            else
+            {
+                MessageBox.Show("Выберите услугу для редактирования.");
             }
         }
 
         private void DeleteService_Click(object sender, RoutedEventArgs e)
         {
+            if (DataGridServices.SelectedItem is Services selectedService)
+            {
+                if (MessageBox.Show("Вы уверены, что хотите удалить эту услугу?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        Entities.GetContext().Services.Remove(selectedService);
+                        Entities.GetContext().SaveChanges();
+                        MessageBox.Show("Услуга удалена!");
+                        DataGridServices.ItemsSource = Entities.GetContext().Services.ToList(); // Обновляем данные
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при удалении: {ex.Message}");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите услугу для удаления.");
+            }
+        }
 
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                // Обновляем данные из базы данных
+                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                DataGridServices.ItemsSource = Entities.GetContext().Services.ToList();
+            }
         }
     }
 }

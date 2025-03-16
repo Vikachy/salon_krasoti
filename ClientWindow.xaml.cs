@@ -60,24 +60,21 @@ namespace salon_krasoti
         {
             try
             {
-                // Находим клиента по имени пользователя (Username)
-                var client = Entities.GetContext().Clients
-                    .FirstOrDefault(c => c.Email == _user.Username);
+                // Find ClientID from UserAccounts
+                int? clientId = _user.ClientID;  // Use int? to accept nullable int
 
-                if (client != null)
+                if (clientId.HasValue) // Check if clientId has a value
                 {
-                    // Получаем ID клиента
-                    int clientId = client.ClientID;
-                    NavigateToPage(new PagesClient.AppointmentsPage(clientId));
+                    MainFrame.Navigate(new PagesClient.AppointmentsPage(clientId.Value)); // Access the value using clientId.Value
                 }
                 else
                 {
-                    /*MessageBox.Show("Не удалось найти клиента для текущего пользователя.");*/
+                    MessageBox.Show("Could not find client for the current user.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}");
+                MessageBox.Show($"Error loading data: {ex.Message}");
             }
         }
 

@@ -24,7 +24,7 @@
                   Style="{StaticResource ModernDataGrid}"
                   IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" />
+                <DataGridTextColumn Header="ФИО" Binding="{Binding EmployeeFullName}" />
                 <DataGridTextColumn Header="Должность" Binding="{Binding Position}" />
                 <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" />
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}" />

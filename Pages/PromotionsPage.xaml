@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:salon_krasoti.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PromotionsPage">
+      Title="PromotionsPage" IsVisibleChanged="Page_IsVisibleChanged">
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

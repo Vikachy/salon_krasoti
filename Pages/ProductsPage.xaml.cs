@@ -28,14 +28,19 @@ namespace salon_krasoti.Pages
 
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
-            // Логика добавления продукта
+            NavigationService.Navigate(new PagesEdit.AddEditProductPage(null));
         }
 
         private void EditProduct_Click(object sender, RoutedEventArgs e)
         {
-            if (DataGridProducts.SelectedItem is Products selectedProduct)
+            var selectedProduct = DataGridProducts.SelectedItem as Products;
+            if (selectedProduct != null)
             {
-                // Логика редактирования продукта
+                NavigationService.Navigate(new PagesEdit.AddEditProductPage(selectedProduct));
+            }
+            else
+            {
+                MessageBox.Show("Выберите продукт для редактирования.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -69,6 +74,16 @@ namespace salon_krasoti.Pages
                                 MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                // Обновляем данные из базы данных
+                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                DataGridProducts.ItemsSource = Entities.GetContext().Products.ToList();
+            }
         }
     }
 }

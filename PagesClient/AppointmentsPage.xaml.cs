@@ -38,19 +38,13 @@ namespace salon_krasoti.PagesClient
                     {
                         AppointmentID = a.AppointmentID,
                         AppointmentDateTime = a.AppointmentDateTime,
-                        ServiceName = a.Services.ServiceName, // Используем навигационное свойство Service
-                        EmployeeName = a.Employees.FirstName + " " + a.Employees.LastName, // Используем навигационное свойство Employee
+                        ServiceID = a.ServiceID, 
+                        ServiceName = a.Services.ServiceName, 
+                        EmployeeName = a.Employees.FirstName + " " + a.Employees.LastName, 
                         Status = a.Status
                     })
                     .ToList();
 
-                // Отладочный вывод
-                foreach (var appointment in appointments)
-                {
-                    Console.WriteLine($"Appointment: {appointment.AppointmentDateTime}, Service: {appointment.ServiceName}, Employee: {appointment.EmployeeName}, Status: {appointment.Status}");
-                }
-
-                // Привязка данных к DataGrid
                 DataGridAppointments.ItemsSource = appointments;
             }
             catch (Exception ex)
@@ -69,95 +63,22 @@ namespace salon_krasoti.PagesClient
                 return;
             }
 
-            // Проверяем, что выбранная запись принадлежит текущему клиенту
-            if (selectedAppointment.ClientID != _currentClientId)
-            {
-                MessageBox.Show("Вы не можете оставить отзыв на чужую запись.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            // Создаем окно для ввода отзыва
-            var reviewWindow = new Window
-            {
-                Title = "Оставить отзыв",
-                Width = 300,
-                Height = 200,
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
-            };
-
-            var grid = new Grid();
-            reviewWindow.Content = grid;
-
-            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-
-            var ratingLabel = new Label { Content = "Рейтинг:" };
-            grid.Children.Add(ratingLabel);
-            Grid.SetRow(ratingLabel, 0);
-
-            var ratingComboBox = new ComboBox
-            {
-                ItemsSource = new[] { 1, 2, 3, 4, 5 },
-                SelectedIndex = 0 // По умолчанию выбран первый элемент
-            };
-            grid.Children.Add(ratingComboBox);
-            Grid.SetRow(ratingComboBox, 0);
-            Grid.SetColumn(ratingComboBox, 1);
-
-            var commentLabel = new Label { Content = "Комментарий:" };
-            grid.Children.Add(commentLabel);
-            Grid.SetRow(commentLabel, 1);
-
-            var commentTextBox = new TextBox { Height = 50, Width = 200 };
-            grid.Children.Add(commentTextBox);
-            Grid.SetRow(commentTextBox, 1);
-            Grid.SetColumn(commentTextBox, 1);
-
-            var saveButton = new Button { Content = "Оставить отзыв" };
-            grid.Children.Add(saveButton);
-            Grid.SetRow(saveButton, 2);
-            Grid.SetColumn(saveButton, 1);
-
-            saveButton.Click += (senderButton, eButton) =>
-            {
-                try
-                {
-                    if (ratingComboBox.SelectedItem == null)
-                    {
-                        MessageBox.Show("Выберите рейтинг.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
-                    }
-
-                    var rating = (int)ratingComboBox.SelectedItem;
-                    var comment = commentTextBox.Text;
-
-                    var review = new Reviews
-                    {
-                        ClientID = _currentClientId,
-                        ServiceID = selectedAppointment.ServiceID,
-                        Rating = rating,
-                        Comment = comment
-                    };
-
-                    Entities.GetContext().Reviews.Add(review);
-                    Entities.GetContext().SaveChanges();
-
-                    reviewWindow.Close();
-                    MessageBox.Show("Отзыв успешно добавлен!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при добавлении отзыва: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            };
-
-            reviewWindow.ShowDialog();
+            NavigationService.Navigate(new AddReviewPage(_currentClientId, selectedAppointment.ServiceID));
         }
 
         private void AddAppointment_Click(object sender, RoutedEventArgs e)
         {
+            NavigationService.Navigate(new PagesClient.AddAppointmentPage(_currentClientId));
+        }
 
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                // Обновляем данные из базы данных
+                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                LoadAppointments();
+            }
         }
     }
 }

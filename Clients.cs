@@ -37,8 +37,6 @@ namespace salon_krasoti
         public virtual ICollection<Reviews> Reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserAccounts> UserAccounts { get; set; }
-
         public string ClientFullName => $"{FirstName} {LastName}";
-
     }
 }

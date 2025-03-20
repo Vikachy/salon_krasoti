@@ -31,6 +31,7 @@
         <AssociationConnector Association="salon_krasotiModel.FK__Sales__ServiceID__6FE99F9F" ManuallyRouted="false" />
         <AssociationConnector Association="salon_krasotiModel.FK_Appointments_Promotions" />
         <AssociationConnector Association="salon_krasotiModel.FK_UserAccounts_Clients" />
+        <AssociationConnector Association="salon_krasotiModel.FK_UserAccounts_Employees" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

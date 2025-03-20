@@ -50,14 +50,27 @@ namespace salon_krasoti
                     return;
                 }
 
-                Window newWindow;
+                Window newWindow = null; // Инициализация переменной
+
                 switch (user.RoleID)
                 {
                     case 1:
                         newWindow = new AdminWindow(user);
                         break;
                     case 2:
-                        newWindow = new EmployeeWindow(user);
+                        // Перенаправление на окно сотрудника
+                        var employee = db.Employees
+                            .FirstOrDefault(emp => emp.EmployeeID == user.EmployeeID); // Используем EmployeeID из UserAccounts
+
+                        if (employee != null)
+                        {
+                            newWindow = new EmployeeWindow(employee); // Передаем employee
+                        }
+                        else
+                        {
+                            MessageBox.Show("Сотрудник не найден.");
+                            return;
+                        }
                         break;
                     case 3:
                         newWindow = new ClientWindow(user);
@@ -67,10 +80,12 @@ namespace salon_krasoti
                         return;
                 }
 
-                Window currentWindow = Application.Current.MainWindow;
-                newWindow.Show();
-                currentWindow.Close();
-
+                if (newWindow != null)
+                {
+                    Window currentWindow = Application.Current.MainWindow;
+                    newWindow.Show();
+                    currentWindow.Close();
+                }
             }
         }
 

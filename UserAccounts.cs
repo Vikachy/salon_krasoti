@@ -19,8 +19,10 @@ namespace salon_krasoti
         public string PasswordHash { get; set; }
         public Nullable<int> RoleID { get; set; }
         public Nullable<int> ClientID { get; set; }
+        public Nullable<int> EmployeeID { get; set; }
     
         public virtual Roles Roles { get; set; }
         public virtual Clients Client { get; set; }
+        public virtual Employees Employee { get; set; }
     }
 }

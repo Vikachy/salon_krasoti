@@ -138,6 +138,21 @@
     <Compile Include="PagesEdit\AddEditServicePage.xaml.cs">
       <DependentUpon>AddEditServicePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PagesEmployee\AddEditAppointmentPage.xaml.cs">
+      <DependentUpon>AddEditAppointmentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesEmployee\AddEditSalePage.xaml.cs">
+      <DependentUpon>AddEditSalePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesEmployee\AppointmentsPage.xaml.cs">
+      <DependentUpon>AppointmentsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesEmployee\ProductsPage.xaml.cs">
+      <DependentUpon>ProductsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PagesEmployee\SalesPage.xaml.cs">
+      <DependentUpon>SalesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AppointmentsPage.xaml.cs">
       <DependentUpon>AppointmentsPage.xaml</DependentUpon>
     </Compile>
@@ -287,6 +302,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PagesEdit\AddEditServicePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesEmployee\AddEditAppointmentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesEmployee\AddEditSalePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesEmployee\AppointmentsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesEmployee\ProductsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PagesEmployee\SalesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -19,6 +19,7 @@ namespace salon_krasoti
         {
             this.Appointments = new HashSet<Appointments>();
             this.Sales = new HashSet<Sales>();
+            this.UserAccounts = new HashSet<UserAccounts>();
         }
     
         public int EmployeeID { get; set; }
@@ -36,7 +37,9 @@ namespace salon_krasoti
         public virtual Roles Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sales> Sales { get; set; }
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserAccounts> UserAccounts { get; set; }
         public string EmployeeFullName => $"{FirstName} {LastName}";
+
     }
 }

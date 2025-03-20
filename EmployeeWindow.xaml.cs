@@ -19,26 +19,55 @@ namespace salon_krasoti
     /// </summary>
     public partial class EmployeeWindow : Window
     {
-        private UserAccounts _user;
+        private Employees _employee;
 
-        public EmployeeWindow(UserAccounts user)
+        public EmployeeWindow(Employees employee)
         {
             InitializeComponent();
-            _user = user; // Инициализация данных сотрудника
-            MainFrame.Navigate(new Pages.AppointmentsPage());
+            _employee = employee; // Используем переданный объект Employees
+            LoadEmployeeData();
         }
-        private void NavigateToPage(Page page)
+
+        private void LoadEmployeeData()
         {
-            MainFrame.Navigate(page);
-            MainFrame.NavigationService.RemoveBackEntry();
+            try
+            {
+                if (_employee != null)
+                {
+                    // Переход на страницу "Мои записи" по умолчанию
+                    MainFrame.Navigate(new PagesEmployee.AppointmentsPage(_employee.EmployeeID));
+                }
+                else
+                {
+                    MessageBox.Show("Сотрудник не найден.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}");
+            }
         }
 
-        // Обработчики кнопок
+        private void Appointments_Click(object sender, RoutedEventArgs e)
+        {
+            if (_employee != null)
+            {
+                MainFrame.Navigate(new PagesEmployee.AppointmentsPage(_employee.EmployeeID));
+            }
+        }
 
-        private void Appointments_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.AppointmentsPage());
-        private void Sales_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.SalesPage());
-        private void Products_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.ProductsPage());
+        private void Sales_Click(object sender, RoutedEventArgs e)
+        {
+            if (_employee != null)
+            {
+                MainFrame.Navigate(new PagesEmployee.SalesPage(_employee.EmployeeID));
+            }
+        }
 
+        private void Products_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new PagesEmployee.ProductsPage());
+        }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {

@@ -18,6 +18,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Style="{StaticResource FormTitle}">
@@ -34,10 +35,18 @@
                     <PasswordBox Style="{StaticResource ModernPasswordBox}" x:Name="passwordText"/>
                 </StackPanel>
 
-                <Button Grid.Row="3" Style="{StaticResource CustomButtonStyle}" Content="Войти"
+                <StackPanel Grid.Row="3" x:Name="captchaPanel" Visibility="Collapsed">
+                    <TextBlock Text="Введите текст с картинки:"/>
+                    <Border BorderBrush="Gray" BorderThickness="1">
+                        <Canvas x:Name="captchaCanvas" Width="200" Height="50" Background="White"/>
+                    </Border>
+                    <TextBox x:Name="captchaText" Width="200" Margin="0,5"/>
+                </StackPanel>
+
+                <Button Grid.Row="4" Style="{StaticResource CustomButtonStyle}" Content="Войти"
                         Click="signInButton_Click"/>
 
-                <Button Grid.Row="4" Style="{StaticResource TextButtonStyle}" Content="Создать аккаунт"
+                <Button Grid.Row="5" Style="{StaticResource TextButtonStyle}" Content="Создать аккаунт"
                         Click="NavigateToReg_Click"/>
             </Grid>
         </Border>

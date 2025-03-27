@@ -25,7 +25,6 @@ namespace salon_krasoti.PagesEmployee
             InitializeComponent();
             DataGridProducts.ItemsSource = Entities.GetContext().Products.ToList();
         }
-
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new PagesEdit.AddEditProductPage(null));

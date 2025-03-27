@@ -61,11 +61,9 @@ namespace salon_krasoti.PagesEmployee
         {
             try
             {
-                // Получаем объект Employee по ID
                 var currentEmployee = Entities.GetContext().Employees
                     .FirstOrDefault(emp => emp.EmployeeID == _currentEmployeeId);
 
-                // Переход на страницу добавления записи с передачей объекта Employee
                 NavigationService.Navigate(new AddEditAppointmentPage(currentEmployee));
             }
             catch (Exception ex)
@@ -78,7 +76,6 @@ namespace salon_krasoti.PagesEmployee
         {
             try
             {
-                // Получаем выбранный анонимный объект
                 var selectedAppointment = DataGridAppointments.SelectedItem as dynamic;
                 if (selectedAppointment == null)
                 {
@@ -86,7 +83,6 @@ namespace salon_krasoti.PagesEmployee
                     return;
                 }
 
-                // Получаем ID выбранной записи
                 int appointmentId = selectedAppointment.AppointmentID;
 
                 // Находим запись в базе данных
@@ -139,12 +135,20 @@ namespace salon_krasoti.PagesEmployee
                     return;
                 }
 
-                // Переход на страницу редактирования записи с передачей объекта Employees и Appointments
                 NavigationService.Navigate(new AddEditAppointmentPage(_currentEmployee, appointmentToEdit));
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при редактировании записи: {ex.Message}");
+            }
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                LoadAppointments();
             }
         }
     }

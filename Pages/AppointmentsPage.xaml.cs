@@ -42,12 +42,10 @@ namespace salon_krasoti.Pages
 
         private void EditAppointment_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем выбранную запись
             var selectedAppointment = (Appointments)DataGridAppointments.SelectedItem;
 
             if (selectedAppointment != null)
             {
-                // Открываем страницу редактирования записи
                 NavigationService.Navigate(new PagesEdit.AddEditAppointmentPage(selectedAppointment));
             }
             else
@@ -58,19 +56,16 @@ namespace salon_krasoti.Pages
 
         private void DeleteAppointment_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем выбранную запись
             var selectedAppointment = (Appointments)DataGridAppointments.SelectedItem;
 
             if (selectedAppointment != null)
             {
-                // Подтверждение удаления
                 var result = MessageBox.Show("Вы уверены, что хотите удалить эту запись?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     try
                     {
-                        // Удаляем запись из базы данных
                         var context = Entities.GetContext();
                         context.Appointments.Remove(selectedAppointment);
                         context.SaveChanges();
@@ -98,7 +93,6 @@ namespace salon_krasoti.Pages
         {
             if (Visibility == Visibility.Visible)
             {
-                // Обновляем данные из базы данных
                 Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
                 DataGridAppointments.ItemsSource = Entities.GetContext().Appointments
                 .Include(a => a.Clients)

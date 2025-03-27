@@ -153,5 +153,15 @@ namespace salon_krasoti.PagesEmployee
                 MessageBox.Show($"Ошибка при удалении продажи: {ex.Message}");
             }
         }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                // Обновляем данные из базы данных
+                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                LoadSales();
+            }
+        }
     }
 }

@@ -371,4 +371,132 @@
         </Setter>
     </Style>
 
+
+    <Style x:Key="ModernListView" TargetType="ListView">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="LightGray"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Margin" Value="10"/>
+    </Style>
+
+
+    <!-- Стиль для заголовков столбцов GridView -->
+    <Style x:Key="ColumnHeaderStyle" TargetType="GridViewColumnHeader">
+        <Setter Property="Background" Value="#800000"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Стиль для строк ListView -->
+    <Style x:Key="ListViewItemStyle" TargetType="ListViewItem">
+        <Setter Property="Background" Value="#f4acb7"/>
+        <Setter Property="BorderBrush" Value="#f4acb7"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Foreground" Value="#FF333333"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#f4acb7"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FFDAB3B3"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Стиль для заголовков отчетов -->
+    <Style x:Key="ReportTitleStyle" TargetType="TextBlock" BasedOn="{StaticResource FormTitle}">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="10 5 0 5"/>
+        <Setter Property="Foreground" Value="#FF800000"/>
+    </Style>
+
+    <!-- Стиль для блока фильтров -->
+    <Style x:Key="FilterBorderStyle" TargetType="Border">
+        <Setter Property="Background" Value="#FFF5F5F5"/>
+        <Setter Property="BorderBrush" Value="#FFDDDDDD"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Margin" Value="0 0 0 10"/>
+    </Style>
+
+    <!-- Стиль для ComboBox с автодополнением -->
+    <Style x:Key="AutoCompleteComboBox" TargetType="ComboBox" BasedOn="{StaticResource FormComboBoxStyle}">
+        <Setter Property="IsEditable" Value="True"/>
+        <Setter Property="IsTextSearchEnabled" Value="True"/>
+        <Setter Property="StaysOpenOnEdit" Value="True"/>
+        <Setter Property="TextSearch.TextPath" Value="Name"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ComboBoxItem">
+                                <Border Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                    <ContentPresenter Margin="5" 
+                                                  HorizontalAlignment="Left" 
+                                                  VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Стиль для ComboBox в фильтрах -->
+    <Style x:Key="FilterComboBoxStyle" TargetType="ComboBox">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="#FFABADB3"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Базовый стиль для подсказок -->
+    <Style x:Key="ToolTipStyle" TargetType="ToolTip">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="#FFABADB3"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Padding" Value="5"/>
+    </Style>
+
+
+    <Style x:Key="SmallActionButtonStyle" BasedOn="{StaticResource ActionButtonStyle}" TargetType="Button">
+        <Setter Property="Width" Value="90"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Padding" Value="5 2"/>
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
+
+    <Style x:Key="SmallCancelButtonStyle" BasedOn="{StaticResource CancelButtonStyle}" TargetType="Button">
+        <Setter Property="Width" Value="90"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Padding" Value="5 2"/>
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
+
 </ResourceDictionary>

@@ -23,7 +23,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- Заголовок -->
-                <TextBlock Grid.Row="0" Text="Редактирование записи" Style="{StaticResource PageTitleStyle}" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Text="Добавление/Редактирование записи" Style="{StaticResource PageTitleStyle}" HorizontalAlignment="Center"/>
 
                 <!-- Форма редактирования -->
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">

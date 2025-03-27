@@ -5,10 +5,182 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:salon_krasoti.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="950"
       Title="ReportsPage">
 
-    <Grid>
-        
+    <Grid Style="{StaticResource PageGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок страницы -->
+        <Border Grid.Row="0" Background="#FF800000" Padding="15" Margin="0,0,0,10">
+            <TextBlock Text="ОТЧЕТЫ" 
+                       Foreground="White" 
+                       FontSize="24" 
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"/>
+        </Border>
+
+        <!-- Панель фильтров -->
+        <Border Grid.Row="1" Background="#FFF5F5F5" BorderBrush="#FFDDDDDD" BorderThickness="0,0,0,1" Padding="15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Период -->
+                <StackPanel Orientation="Horizontal" Grid.Column="0">
+                    <TextBlock Text="Период:" 
+                               VerticalAlignment="Center" 
+                               Margin="0,0,10,0"
+                               FontWeight="SemiBold"/>
+
+                    <DatePicker x:Name="dpStartDate" 
+                                Style="{StaticResource FormDatePickerStyle}" 
+                                Width="120"  />
+
+                    <TextBlock Text="-" 
+                               VerticalAlignment="Center"/>
+
+                    <DatePicker x:Name="dpEndDate" 
+                                Style="{StaticResource FormDatePickerStyle}" 
+                                Width="120"/>
+                </StackPanel>
+
+                <!-- Клиент и услуга -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,0">
+                    <!-- Выбор клиента -->
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Клиент:" 
+                                   FontWeight="SemiBold"/>
+                        <ComboBox x:Name="cbClients" 
+                                  Style="{StaticResource FilterComboBoxStyle}"
+                                  Width="200" 
+                                  IsEditable="True"
+                                  StaysOpenOnEdit="True"
+                                  TextBoxBase.TextChanged="CbClients_TextChanged"
+                                  SelectionChanged="CbClients_SelectionChanged"
+                                  DisplayMemberPath="FullName">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                    <Setter Property="Padding" Value="5"/>
+                                    <Setter Property="Background" Value="White"/>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                            <ComboBox.ToolTip>
+                                <ToolTip Content="Начните вводить ФИО клиента" Style="{StaticResource ToolTipStyle}"/>
+                            </ComboBox.ToolTip>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- Выбор услуги -->
+                    <StackPanel Orientation="Vertical" Margin="10,0">
+                        <TextBlock Text="Услуга:" 
+                                   FontWeight="SemiBold"/>
+                        <ComboBox x:Name="cbServices" 
+                                  Style="{StaticResource FilterComboBoxStyle}"
+                                  Width="250" 
+                                  IsEditable="True"
+                                  StaysOpenOnEdit="True"
+                                  TextBoxBase.TextChanged="CbServices_TextChanged"
+                                  SelectionChanged="CbServices_SelectionChanged"
+                                  DisplayMemberPath="ServiceName">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                    <Setter Property="Padding" Value="5"/>
+                                    <Setter Property="Background" Value="White"/>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                            <ComboBox.ToolTip>
+                                <ToolTip Content="Начните вводить название услуги" Style="{StaticResource ToolTipStyle}"/>
+                            </ComboBox.ToolTip>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Кнопки -->
+                <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
+                    <Button Content="Применить" 
+                    Style="{StaticResource SmallActionButtonStyle}"
+                    Click="ApplyFilters_Click" 
+                    Margin="0,0,10,0"/>
+
+                    <Button Content="Сбросить" 
+                    Style="{StaticResource SmallCancelButtonStyle}"
+                    Click="ResetFilters_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Отчет об оказанных услугах -->
+        <Border Grid.Row="2" Background="White" Margin="10" CornerRadius="5" BorderThickness="1" BorderBrush="#FFDDDDDD">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Background="#FF800000" CornerRadius="5,5,0,0" Padding="10">
+                    <TextBlock Text="ОКАЗАННЫЕ УСЛУГИ" 
+                               Foreground="White" 
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"/>
+                </Border>
+
+                <DataGrid Grid.Row="1" x:Name="dgServicesReport" 
+                          Style="{StaticResource ModernDataGrid}"
+                          AutoGenerateColumns="False" 
+                          IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Клиент" Binding="{Binding ClientFullName}" Width="*"/>
+                        <DataGridTextColumn Header="Дата оказания" Binding="{Binding AppointmentDateTime, StringFormat='dd.MM.yyyy HH:mm'}" Width="180"/>
+                        <DataGridTextColumn Header="Услуга" Binding="{Binding ServiceName}" Width="*"/>
+                        <DataGridTextColumn Header="Стоимость" Binding="{Binding Price}" Width="120"/>
+                        <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="120"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+
+        <!-- Отчет о продажах -->
+        <Border Grid.Row="4" Background="White" Margin="10" CornerRadius="5" BorderThickness="1" BorderBrush="#FFDDDDDD">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Background="#FF800000" CornerRadius="5,5,0,0" Padding="10">
+                    <TextBlock Text="ПРОДАЖИ УСЛУГ" 
+                               Foreground="White" 
+                               FontWeight="Bold"
+                               HorizontalAlignment="Center"/>
+                </Border>
+
+                <DataGrid Grid.Row="1" x:Name="dgSalesReport" 
+                          Style="{StaticResource ModernDataGrid}"
+                          AutoGenerateColumns="False" 
+                          IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Услуга" Binding="{Binding ServiceName}" Width="*"/>
+                        <DataGridTextColumn Header="Дата продажи" Binding="{Binding SaleDate, StringFormat='dd.MM.yyyy HH:mm'}" Width="180"/>
+                        <DataGridTextColumn Header="Количество" Binding="{Binding QuantitySold}" Width="100"/>
+                        <DataGridTextColumn Header="Сумма" Binding="{Binding TotalAmount}" Width="120"/>
+                        <DataGridTextColumn Header="Сотрудник" Binding="{Binding EmployeeFullName}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

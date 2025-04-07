@@ -1,26 +1,17 @@
 ﻿using salon_krasoti.PagesEdit;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace salon_krasoti.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для ReviewsPage.xaml
-    /// </summary>
     public partial class ReviewsPage : Page
     {
+        private List<Reviews> _allReviews;
+
         public ReviewsPage()
         {
             InitializeComponent();
@@ -29,19 +20,67 @@ namespace salon_krasoti.Pages
 
         private void LoadReviews()
         {
-            // Используем LINQ-запрос для загрузки данных
-            var reviews = from review in Entities.GetContext().Reviews
-                          join client in Entities.GetContext().Clients on review.ClientID equals client.ClientID
-                          join service in Entities.GetContext().Services on review.ServiceID equals service.ServiceID
-                          select new
-                          {
-                              ReviewID = review.ReviewID,
-                              ClientName = client.FirstName + " " + client.LastName,
-                              ServiceName = service.ServiceName,
-                              Rating = review.Rating,
-                              Comment = review.Comment
-                          };
-            DataGridReviews.ItemsSource = reviews.ToList();
+            _allReviews = Entities.GetContext().Reviews
+                .Include(r => r.Clients)
+                .Include(r => r.Services)
+                .ToList();
+            UpdateReviews();
+        }
+
+        private void UpdateReviews()
+        {
+            var currentReviews = _allReviews.AsEnumerable();
+
+            // Фильтрация по поиску
+            if (!string.IsNullOrWhiteSpace(SearchReview.Text))
+            {
+                currentReviews = currentReviews.Where(r =>
+                    (r.Clients.FirstName + " " + r.Clients.LastName).ToLower().Contains(SearchReview.Text.ToLower()) ||
+                    r.Services.ServiceName.ToLower().Contains(SearchReview.Text.ToLower()) ||
+                    r.Rating.ToString().Contains(SearchReview.Text) ||
+                    (r.Comment != null && r.Comment.ToLower().Contains(SearchReview.Text.ToLower())));
+            }
+
+            // Сортировка
+            if (SortReviewBy.SelectedItem != null)
+            {
+                switch (((ComboBoxItem)SortReviewBy.SelectedItem).Content.ToString())
+                {
+                    case "По рейтингу (↑)":
+                        currentReviews = currentReviews.OrderBy(r => r.Rating);
+                        break;
+                    case "По рейтингу (↓)":
+                        currentReviews = currentReviews.OrderByDescending(r => r.Rating);
+                        break;
+                }
+            }
+
+            // Преобразуем в анонимный тип для отображения
+            DataGridReviews.ItemsSource = currentReviews.Select(r => new
+            {
+                ReviewID = r.ReviewID,
+                ClientName = r.Clients.FirstName + " " + r.Clients.LastName,
+                ServiceName = r.Services.ServiceName,
+                Rating = r.Rating,
+                Comment = r.Comment ?? string.Empty
+            }).ToList();
+        }
+
+        private void SearchReview_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateReviews();
+        }
+
+        private void SortReviewBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateReviews();
+        }
+
+        private void CleanFilter_Click(object sender, RoutedEventArgs e)
+        {
+            SearchReview.Text = "";
+            SortReviewBy.SelectedIndex = -1;
+            UpdateReviews();
         }
 
         private void AddReview_Click(object sender, RoutedEventArgs e)
@@ -58,15 +97,13 @@ namespace salon_krasoti.Pages
                 return;
             }
 
-            // Находим отзыв в базе данных по его ID
-            var review = Entities.GetContext().Reviews.Find(selectedReview.ReviewID);
+            var review = _allReviews.FirstOrDefault(r => r.ReviewID == selectedReview.ReviewID);
             if (review == null)
             {
                 MessageBox.Show("Отзыв не найден.");
                 return;
             }
 
-            // Передаем отзыв на страницу редактирования
             NavigationService.Navigate(new AddEditReviewPage(review));
         }
 
@@ -79,16 +116,20 @@ namespace salon_krasoti.Pages
                 return;
             }
 
-            var result = MessageBox.Show("Вы уверены, что хотите удалить этот отзыв?", "Подтверждение", MessageBoxButton.YesNo);
+            var result = MessageBox.Show("Вы уверены, что хотите удалить этот отзыв?",
+                "Подтверждение", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
-                    var review = Entities.GetContext().Reviews.Find(selectedReview.ReviewID);
-                    Entities.GetContext().Reviews.Remove(review);
-                    Entities.GetContext().SaveChanges();
-                    LoadReviews(); // Обновляем данные
-                    MessageBox.Show("Отзыв удален.");
+                    var review = _allReviews.FirstOrDefault(r => r.ReviewID == selectedReview.ReviewID);
+                    if (review != null)
+                    {
+                        Entities.GetContext().Reviews.Remove(review);
+                        Entities.GetContext().SaveChanges();
+                        LoadReviews();
+                        MessageBox.Show("Отзыв удален.");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -101,11 +142,9 @@ namespace salon_krasoti.Pages
         {
             if (Visibility == Visibility.Visible)
             {
-                // Обновляем данные из базы данных
                 Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
                 LoadReviews();
             }
         }
     }
 }
-

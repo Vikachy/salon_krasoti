@@ -44,6 +44,14 @@ namespace salon_krasoti.PagesEdit
         {
             try
             {
+                // Проверка заполненности поля "Должность"
+                if (string.IsNullOrWhiteSpace(TextBoxPosition.Text))
+                {
+                    MessageBox.Show("Укажите должность!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    TextBoxPosition.Focus();
+                    return;
+                }
+
                 var context = Entities.GetContext();
 
                 if (_employee == null)

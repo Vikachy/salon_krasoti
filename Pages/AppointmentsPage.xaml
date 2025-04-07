@@ -9,53 +9,81 @@
       Title="AppointmentsPage" IsVisibleChanged="Page_IsVisibleChanged">
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок страницы -->
-        <TextBlock Grid.Row="0" Text="Записи на услуги" 
-                   Style="{StaticResource PageTitleStyle}" />
+        <TextBlock Grid.Row="0" Text="Записи" Style="{StaticResource PageTitleStyle}"/>
 
-        <!-- Таблица записей -->
-        <DataGrid Grid.Row="1" Name="DataGridAppointments"
-          Style="{StaticResource ModernDataGrid}"
-          AutoGenerateColumns="False"
-          IsReadOnly="True">
+        <Border Grid.Row="1" Background="#fadbc8" CornerRadius="10" Padding="10" Margin="0 0 0 15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource LabelStyle}"/>
+                    <TextBox x:Name="SearchAppointment" 
+                             Style="{StaticResource TextBoxStyle}"
+                             Width="200"
+                             TextChanged="SearchAppointment_TextChanged"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Сортировка:" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource LabelStyle}"/>
+                    <ComboBox Name="SortAppointmentBy" 
+                              Style="{StaticResource ComboBoxStyle}"
+                              Width="200"
+                              SelectionChanged="SortAppointmentBy_SelectionChanged">
+                        <ComboBoxItem Content="По дате (↑)"/>
+                        <ComboBoxItem Content="По дате (↓)"/>
+                        <ComboBoxItem Content="По статусу (А-Я)"/>
+                        <ComboBoxItem Content="По клиенту (А-Я)"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <Button Grid.Column="2" 
+                        Content="Очистить" 
+                        Style="{StaticResource SmallCancelButtonStyle}"
+                        Click="CleanFilter_Click"/>
+            </Grid>
+        </Border>
+
+        <DataGrid Grid.Row="2" Name="DataGridAppointments" 
+                  AutoGenerateColumns="False" 
+                  Style="{StaticResource ModernDataGrid}"
+                  IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Клиент" 
-                    Binding="{Binding ClientFullName}" 
-                    Width="*" />
-                <DataGridTextColumn Header="Сотрудник" 
-                                    Binding="{Binding EmployeeFullName}" 
-                                    Width="*" />
-                <DataGridTextColumn Header="Услуга" Binding="{Binding Services.ServiceName}" Width="*" />
-                <DataGridTextColumn Header="Дата и время" Binding="{Binding AppointmentDateTime}" Width="*" />
-                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*" />
-                <DataGridTextColumn Header="Акция" Binding="{Binding Promotions.PromotionName}" Width="*" />
+                <DataGridTextColumn Header="Клиент" Binding="{Binding Clients.ClientFullName}" Width="*"/>
+                <DataGridTextColumn Header="Сотрудник" Binding="{Binding Employees.EmployeeFullName}" Width="*"/>
+                <DataGridTextColumn Header="Услуга" Binding="{Binding Services.ServiceName}" Width="*"/>
+                <DataGridTextColumn Header="Дата и время" Binding="{Binding AppointmentDateTime}" Width="*"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*"/>
 
-                <!-- Кнопка редактирования -->
                 <DataGridTemplateColumn Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Редактировать"
-                            Style="{StaticResource EditButtonStyle}"
-                            Click="EditAppointment_Click" />
+                                    Style="{StaticResource EditButtonStyle}"
+                                    Click="EditAppointment_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Кнопки управления -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Добавить"
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
+            <Button Content="Добавить" 
                     Style="{StaticResource ActionButtonStyle}"
-                    Click="AddAppointment_Click" />
-            <Button Content="Удалить"
+                    Click="AddAppointment_Click"/>
+
+            <Button Content="Удалить" 
                     Style="{StaticResource ActionButtonStyle}"
-                    Click="DeleteAppointment_Click" />
+                    Click="DeleteAppointment_Click"/>
         </StackPanel>
     </Grid>
 </Page>

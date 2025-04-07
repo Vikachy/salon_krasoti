@@ -22,22 +22,22 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Text="Добавление записи" 
+                <TextBlock Grid.Row="0" Text="{Binding Title}" 
                          Style="{StaticResource PageTitleStyle}" HorizontalAlignment="Center"/>
 
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <StackPanel VerticalAlignment="Top">
                         <TextBlock Text="Клиент:" Style="{StaticResource LabelStyle}" />
                         <ComboBox x:Name="ClientComboBox" 
-                          DisplayMemberPath="ClientFullName" 
-                          SelectedValuePath="ClientID" 
-                          Style="{StaticResource ComboBoxStyle}" />
+                                 DisplayMemberPath="ClientFullName" 
+                                 SelectedValuePath="ClientID" 
+                                 Style="{StaticResource ComboBoxStyle}" />
 
                         <TextBlock Text="Услуга:" Style="{StaticResource LabelStyle}" />
                         <ComboBox x:Name="ComboBoxServices" 
-                              DisplayMemberPath="ServiceName" 
-                              SelectedValuePath="ServiceID" 
-                              Style="{StaticResource ComboBoxStyle}" />
+                                 DisplayMemberPath="ServiceName" 
+                                 SelectedValuePath="ServiceID" 
+                                 Style="{StaticResource ComboBoxStyle}" />
 
                         <TextBlock Text="Дата и время:" Style="{StaticResource LabelStyle}" />
                         <DatePicker x:Name="DatePickerAppointment" 
@@ -50,9 +50,9 @@
                                  PreviewTextInput="TextBoxTime_PreviewTextInput"
                                  PreviewKeyDown="TextBoxTime_PreviewKeyDown"/>
 
-                        <!-- Добавлен ComboBox для статуса -->
                         <TextBlock Text="Статус:" Style="{StaticResource LabelStyle}" />
-                        <ComboBox x:Name="ComboBoxStatus" Style="{StaticResource ComboBoxStyle}" />
+                        <ComboBox x:Name="ComboBoxStatus" 
+                                 Style="{StaticResource ComboBoxStyle}" />
                     </StackPanel>
                 </ScrollViewer>
 

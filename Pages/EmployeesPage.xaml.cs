@@ -142,6 +142,44 @@ namespace salon_krasoti.Pages
             }
         }
 
+        private void UpdateEmployees()
+        {
+            var currentEmployees = Entities.GetContext().Employees.ToList();
+
+            currentEmployees = currentEmployees.Where(x =>
+                x.FirstName.ToLower().Contains(SearchEmployeeName.Text.ToLower()) ||
+                x.LastName.ToLower().Contains(SearchEmployeeName.Text.ToLower()) ||
+                x.Position.ToLower().Contains(SearchEmployeeName.Text.ToLower())).ToList();
+
+            if (SortEmployeeBy.SelectedIndex == 0)
+                currentEmployees = currentEmployees.OrderBy(x => x.FirstName).ToList();
+            else if (SortEmployeeBy.SelectedIndex == 1)
+                currentEmployees = currentEmployees.OrderByDescending(x => x.FirstName).ToList();
+            else if (SortEmployeeBy.SelectedIndex == 2)
+                currentEmployees = currentEmployees.OrderBy(x => x.Position).ToList();
+            else if (SortEmployeeBy.SelectedIndex == 3)
+                currentEmployees = currentEmployees.OrderByDescending(x => x.Position).ToList();
+
+            DataGridEmployees.ItemsSource = currentEmployees;
+        }
+
+        private void SearchEmployeeName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateEmployees();
+        }
+
+        private void SortEmployeeBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateEmployees();
+        }
+
+        private void CleanFilter_Click(object sender, RoutedEventArgs e)
+        {
+            SearchEmployeeName.Text = "";
+            SortEmployeeBy.SelectedIndex = -1;
+            UpdateEmployees();
+        }
+
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (Visibility == Visibility.Visible)

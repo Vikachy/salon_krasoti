@@ -90,6 +90,45 @@ namespace salon_krasoti.Pages
             }
         }
 
+        private void UpdateClients()
+        {
+            var currentClients = Entities.GetContext().Clients.ToList();
+
+            // Фильтрация по поиску
+            currentClients = currentClients.Where(x =>
+                x.FirstName.ToLower().Contains(SearchClientName.Text.ToLower()) ||
+                x.LastName.ToLower().Contains(SearchClientName.Text.ToLower())).ToList();
+
+            // Сортировка
+            if (SortClientBy.SelectedIndex == 0)
+                currentClients = currentClients.OrderBy(x => x.FirstName).ToList();
+            else if (SortClientBy.SelectedIndex == 1)
+                currentClients = currentClients.OrderByDescending(x => x.FirstName).ToList();
+            else if (SortClientBy.SelectedIndex == 2)
+                currentClients = currentClients.OrderBy(x => x.LastName).ToList();
+            else if (SortClientBy.SelectedIndex == 3)
+                currentClients = currentClients.OrderByDescending(x => x.LastName).ToList();
+
+            DataGridClients.ItemsSource = currentClients;
+        }
+
+        private void SearchClientName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateClients();
+        }
+
+        private void SortClientBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateClients();
+        }
+
+        private void CleanFilter_Click(object sender, RoutedEventArgs e)
+        {
+            SearchClientName.Text = "";
+            SortClientBy.SelectedIndex = -1;
+            UpdateClients();
+        }
+
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (Visibility == Visibility.Visible)

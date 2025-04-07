@@ -9,17 +9,58 @@
       Title="ClientsPage" IsVisibleChanged="Page_IsVisibleChanged">
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Заголовок страницы -->
         <TextBlock Grid.Row="0" Text="Страница клиентов" 
-                   Style="{StaticResource PageTitleStyle}" />
+                   Style="{StaticResource PageTitleStyle}"/>
+
+        <!-- Панель поиска и фильтрации -->
+        <Border Grid.Row="1" Background="PeachPuff" CornerRadius="10" Padding="10" Margin="0 0 0 15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Поле поиска -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource LabelStyle}"/>
+                    <TextBox x:Name="SearchClientName" 
+                             Style="{StaticResource TextBoxStyle}"
+                             Width="200"
+                             TextChanged="SearchClientName_TextChanged"/>
+                </StackPanel>
+
+                <!-- Сортировка -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Сортировка:" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource LabelStyle}"/>
+                    <ComboBox Name="SortClientBy" 
+                              Style="{StaticResource ComboBoxStyle}"
+                              Width="200"
+                              SelectionChanged="SortClientBy_SelectionChanged">
+                        <ComboBoxItem Content="По имени (А-Я)"/>
+                        <ComboBoxItem Content="По имени (Я-А)"/>
+                        <ComboBoxItem Content="По фамилии (А-Я)"/>
+                        <ComboBoxItem Content="По фамилии (Я-А)"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Кнопка очистки -->
+                <Button Grid.Column="2" 
+                        Content="Очистить" 
+                        Style="{StaticResource SmallCancelButtonStyle}"
+                        Click="CleanFilter_Click"/>
+            </Grid>
+        </Border>
 
         <!-- Таблица клиентов -->
-        <DataGrid Grid.Row="1" Name="DataGridClients" 
+        <DataGrid Grid.Row="2" Name="DataGridClients" 
                   AutoGenerateColumns="False" 
                   Style="{StaticResource ModernDataGrid}"
                   IsReadOnly="True">
@@ -42,7 +83,7 @@
         </DataGrid>
 
         <!-- Кнопки управления -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
             <Button Content="Добавить" 
                     Style="{StaticResource ActionButtonStyle}"
                     Click="AddClient_Click" />

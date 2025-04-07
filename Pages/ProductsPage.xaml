@@ -10,26 +10,64 @@
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок страницы -->
-        <TextBlock Grid.Row="0" Text="Страница продуктов" Style="{StaticResource PageTitleStyle}"/>
+        <TextBlock Grid.Row="0" Text="Продукты" Style="{StaticResource PageTitleStyle}"/>
 
-        <!-- Таблица продуктов -->
-        <DataGrid Grid.Row="1" Name="DataGridProducts" 
+        <Border Grid.Row="1" Background="#fadbc8" CornerRadius="10" Padding="10" Margin="0 0 0 15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource LabelStyle}"/>
+                    <TextBox x:Name="SearchProductName" 
+                             Style="{StaticResource TextBoxStyle}"
+                             Width="200"
+                             TextChanged="SearchProductName_TextChanged"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Сортировка:" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource LabelStyle}"/>
+                    <ComboBox Name="SortProductBy" 
+                              Style="{StaticResource ComboBoxStyle}"
+                              Width="200"
+                              SelectionChanged="SortProductBy_SelectionChanged">
+                        <ComboBoxItem Content="По названию (А-Я)"/>
+                        <ComboBoxItem Content="По названию (Я-А)"/>
+                        <ComboBoxItem Content="По цене (↑)"/>
+                        <ComboBoxItem Content="По цене (↓)"/>
+                        <ComboBoxItem Content="По количеству (↑)"/>
+                        <ComboBoxItem Content="По количеству (↓)"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <Button Grid.Column="2" 
+                        Content="Очистить" 
+                        Style="{StaticResource SmallCancelButtonStyle}"
+                        Click="CleanFilter_Click"/>
+            </Grid>
+        </Border>
+
+        <DataGrid Grid.Row="2" Name="DataGridProducts" 
                   AutoGenerateColumns="False" 
                   Style="{StaticResource ModernDataGrid}"
                   IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Название" Binding="{Binding ProductName}"/>
-                <DataGridTextColumn Header="Цена" Binding="{Binding Price}"/>
-                <DataGridTextColumn Header="Количество" Binding="{Binding StockQuantity}"/>
-                <DataGridTemplateColumn Header="Действия" Width="*">
+                <DataGridTextColumn Header="Название" Binding="{Binding ProductName}" Width="*"/>
+                <DataGridTextColumn Header="Цена" Binding="{Binding Price}" Width="*"/>
+                <DataGridTextColumn Header="Количество" Binding="{Binding StockQuantity}" Width="*"/>
+
+                <DataGridTemplateColumn Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Редактировать" 
+                            <Button Content="Редактировать"
                                     Style="{StaticResource EditButtonStyle}"
                                     Click="EditProduct_Click"/>
                         </DataTemplate>
@@ -38,15 +76,14 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Кнопки управления -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
             <Button Content="Добавить" 
                     Style="{StaticResource ActionButtonStyle}"
                     Click="AddProduct_Click"/>
 
             <Button Content="Удалить" 
-                Style="{StaticResource ActionButtonStyle}"
-                Click="DeleteProduct_Click" />
+                    Style="{StaticResource ActionButtonStyle}"
+                    Click="DeleteProduct_Click"/>
         </StackPanel>
     </Grid>
 </Page>

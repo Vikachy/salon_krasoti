@@ -7,51 +7,80 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ReviewsPage" IsVisibleChanged="Page_IsVisibleChanged">
-
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок страницы -->
-        <TextBlock Grid.Row="0" Text="Страница отзывов" 
-                   Style="{StaticResource PageTitleStyle}" />
+        <TextBlock Grid.Row="0" Text="Отзывы" Style="{StaticResource PageTitleStyle}"/>
 
-        <!-- Таблица отзывов -->
-        <DataGrid Grid.Row="1" Name="DataGridReviews"
+        <Border Grid.Row="1" Background="#fadbc8" CornerRadius="10" Padding="10" Margin="0 0 0 15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource LabelStyle}"/>
+                    <TextBox x:Name="SearchReview" 
+                             Style="{StaticResource TextBoxStyle}"
+                             Width="200"
+                             TextChanged="SearchReview_TextChanged"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Сортировка:" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource LabelStyle}"/>
+                    <ComboBox Name="SortReviewBy" 
+                              Style="{StaticResource ComboBoxStyle}"
+                              Width="200"
+                              SelectionChanged="SortReviewBy_SelectionChanged">
+                        <ComboBoxItem Content="По рейтингу (↑)"/>
+                        <ComboBoxItem Content="По рейтингу (↓)"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <Button Grid.Column="2" 
+                        Content="Очистить" 
+                        Style="{StaticResource SmallCancelButtonStyle}"
+                        Click="CleanFilter_Click"/>
+            </Grid>
+        </Border>
+
+        <DataGrid Grid.Row="2" Name="DataGridReviews" 
+                  AutoGenerateColumns="False" 
                   Style="{StaticResource ModernDataGrid}"
-                  AutoGenerateColumns="False"
                   IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID отзыва" Binding="{Binding ReviewID}" Width="*" />
-                <DataGridTextColumn Header="Клиент" Binding="{Binding ClientName}" Width="*" />
-                <DataGridTextColumn Header="Услуга" Binding="{Binding ServiceName}" Width="*" />
-                <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}" Width="*" />
-                <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" Width="*" />
+                <DataGridTextColumn Header="Клиент" Binding="{Binding ClientName}" Width="*"/>
+                <DataGridTextColumn Header="Услуга" Binding="{Binding ServiceName}" Width="*"/>
+                <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}" Width="*"/>
+                <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" Width="*"/>
 
-                <!-- Кнопка редактирования -->
                 <DataGridTemplateColumn Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Редактировать" 
+                            <Button Content="Редактировать"
                                     Style="{StaticResource EditButtonStyle}"
-                                    Click="EditReview_Click" />
+                                    Click="EditReview_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Кнопки управления -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 15">
-            <Button Content="Добавить"
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
+            <Button Content="Добавить" 
                     Style="{StaticResource ActionButtonStyle}"
-                    Click="AddReview_Click" />
-            <Button Content="Удалить"
+                    Click="AddReview_Click"/>
+
+            <Button Content="Удалить" 
                     Style="{StaticResource ActionButtonStyle}"
-                    Click="DeleteReview_Click" />
+                    Click="DeleteReview_Click"/>
         </StackPanel>
     </Grid>
 </Page>

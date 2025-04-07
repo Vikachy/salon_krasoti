@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xaml;
 
 namespace salon_krasoti.Pages
 {
@@ -24,6 +25,11 @@ namespace salon_krasoti.Pages
         public ServicesPage()
         {
             InitializeComponent();
+            LoadServices();
+        }
+
+        private void LoadServices()
+        {
             DataGridServices.ItemsSource = Entities.GetContext().Services.ToList();
         }
 
@@ -40,7 +46,7 @@ namespace salon_krasoti.Pages
             }
             else
             {
-                MessageBox.Show("Выберите услугу для редактирования.");
+                MessageBox.Show("Выберите услугу для редактирования.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -48,34 +54,96 @@ namespace salon_krasoti.Pages
         {
             if (DataGridServices.SelectedItem is Services selectedService)
             {
-                if (MessageBox.Show("Вы уверены, что хотите удалить эту услугу?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                // Показываем название удаляемой услуги в сообщении
+                var message = $"Вы уверены, что хотите удалить услугу \"{selectedService.ServiceName}\"?";
+
+                if (MessageBox.Show(message, "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     try
                     {
-                        Entities.GetContext().Services.Remove(selectedService);
-                        Entities.GetContext().SaveChanges();
-                        MessageBox.Show("Услуга удалена!");
-                        DataGridServices.ItemsSource = Entities.GetContext().Services.ToList(); // Обновляем данные
+                        var context = Entities.GetContext();
+                        // Убедимся, что объект прикреплен к контексту
+                        var serviceToDelete = context.Services.Find(selectedService.ServiceID);
+                        if (serviceToDelete != null)
+                        {
+                            context.Services.Remove(serviceToDelete);
+                            context.SaveChanges();
+                            MessageBox.Show($"Услуга \"{selectedService.ServiceName}\" успешно удалена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                            LoadServices(); // Обновляем данные
+                        }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Ошибка при удалении: {ex.Message}");
+                        MessageBox.Show($"Ошибка при удалении услуги: {ex.Message}\n\nПодробности: {ex.InnerException?.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Выберите услугу для удаления.");
+                MessageBox.Show("Выберите услугу для удаления.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+
+        private void UpdateServices()
+        {
+            var currentServices = Entities.GetContext().Services.ToList(); ;
+
+            // Фильтрация по поиску
+            if (!string.IsNullOrWhiteSpace(SearchServiceName.Text))
+            {
+                currentServices = currentServices.Where(s =>
+                    s.ServiceName.ToLower().Contains(SearchServiceName.Text.ToLower()) ||
+                    s.Price.ToString().Contains(SearchServiceName.Text) ||
+                    s.Duration.ToString().Contains(SearchServiceName.Text)).ToList();
+            }
+
+            // Сортировка
+            if (SortServiceBy.SelectedItem != null)
+            {
+                switch (((ComboBoxItem)SortServiceBy.SelectedItem).Content.ToString())
+                {
+                    case "По названию (А-Я)":
+                        currentServices = currentServices.OrderBy(s => s.ServiceName).ToList();
+                        break;
+                    case "По названию (Я-А)":
+                        currentServices = currentServices.OrderByDescending(s => s.ServiceName).ToList();
+                        break;
+                    case "По цене (↑)":
+                        currentServices = currentServices.OrderBy(s => s.Price).ToList();
+                        break;
+                    case "По цене (↓)":
+                        currentServices = currentServices.OrderByDescending(s => s.Price).ToList();
+                        break;
+                }
+            }
+
+            DataGridServices.ItemsSource = currentServices;
+        }
+
+        private void SearchServiceName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateServices();
+        }
+
+        private void SortServiceBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateServices();
+        }
+
+        private void CleanFilter_Click(object sender, RoutedEventArgs e)
+        {
+            SearchServiceName.Text = "";
+            SortServiceBy.SelectedIndex = -1;
+            UpdateServices();
+        }
+
 
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (Visibility == Visibility.Visible)
             {
-                // Обновляем данные из базы данных
-                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
-                DataGridServices.ItemsSource = Entities.GetContext().Services.ToList();
+                LoadServices();
             }
         }
     }

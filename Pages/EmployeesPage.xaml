@@ -9,49 +9,80 @@
       Title="EmployeesPage" IsVisibleChanged="Page_IsVisibleChanged">
     <Grid Style="{StaticResource PageGridStyle}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок страницы -->
-        <TextBlock Grid.Row="0" Text="Страница сотрудников" 
-                   Style="{StaticResource PageTitleStyle}" />
+        <TextBlock Grid.Row="0" Text="Сотрудники" Style="{StaticResource PageTitleStyle}"/>
 
-        <!-- Таблица сотрудников -->
-        <DataGrid Grid.Row="1" Name="DataGridEmployees" 
+        <Border Grid.Row="1" Background="#fadbc8" CornerRadius="10" Padding="10" Margin="0 0 0 15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource LabelStyle}"/>
+                    <TextBox x:Name="SearchEmployeeName" 
+                             Style="{StaticResource TextBoxStyle}"
+                             Width="200"
+                             TextChanged="SearchEmployeeName_TextChanged"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Сортировка:" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource LabelStyle}"/>
+                    <ComboBox Name="SortEmployeeBy" 
+                              Style="{StaticResource ComboBoxStyle}"
+                              Width="200"
+                              SelectionChanged="SortEmployeeBy_SelectionChanged">
+                        <ComboBoxItem Content="По имени (А-Я)"/>
+                        <ComboBoxItem Content="По имени (Я-А)"/>
+                        <ComboBoxItem Content="По должности (А-Я)"/>
+                        <ComboBoxItem Content="По должности (Я-А)"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <Button Grid.Column="2" 
+                        Content="Очистить" 
+                        Style="{StaticResource SmallCancelButtonStyle}"
+                        Click="CleanFilter_Click"/>
+            </Grid>
+        </Border>
+
+        <DataGrid Grid.Row="2" Name="DataGridEmployees" 
                   AutoGenerateColumns="False" 
                   Style="{StaticResource ModernDataGrid}"
                   IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ФИО" Binding="{Binding EmployeeFullName}" />
-                <DataGridTextColumn Header="Должность" Binding="{Binding Position}" />
-                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" />
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
-                <DataGridTextColumn Header="Дата приема" Binding="{Binding HireDate}" />
-                <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth}" />
+                <DataGridTextColumn Header="ФИО" Binding="{Binding EmployeeFullName}" Width="*"/>
+                <DataGridTextColumn Header="Должность" Binding="{Binding Position}" Width="*"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="*"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
 
-                <DataGridTemplateColumn Width="*">
+                <DataGridTemplateColumn Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Редактировать"
                                     Style="{StaticResource EditButtonStyle}"
-                                    Click="EditEmployee_Click" />
+                                    Click="EditEmployee_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Кнопки управления -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 15">
             <Button Content="Добавить" 
                     Style="{StaticResource ActionButtonStyle}"
-                    Click="AddEmployee_Click" />
+                    Click="AddEmployee_Click"/>
 
             <Button Content="Удалить" 
                     Style="{StaticResource ActionButtonStyle}"
-                    Click="DeleteEmployee_Click" />
+                    Click="DeleteEmployee_Click"/>
         </StackPanel>
     </Grid>
 </Page>

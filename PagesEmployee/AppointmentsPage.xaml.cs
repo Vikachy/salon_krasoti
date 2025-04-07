@@ -1,33 +1,21 @@
-﻿using salon_krasoti.PagesClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace salon_krasoti.PagesEmployee
 {
-    /// <summary>
-    /// Логика взаимодействия для AppointmentsPage.xaml
-    /// </summary>
-     public partial class AppointmentsPage : Page
+    public partial class AppointmentsPage : Page
     {
-        private int _currentEmployeeId;
-        private Employees _currentEmployee;
+        private readonly int _employeeId;
+        private List<Appointments> _allAppointments;
 
         public AppointmentsPage(int employeeId)
         {
             InitializeComponent();
-            _currentEmployeeId = employeeId;
+            _employeeId = employeeId;
             LoadAppointments();
         }
 
@@ -35,111 +23,89 @@ namespace salon_krasoti.PagesEmployee
         {
             try
             {
-                // Загрузка записей для текущего сотрудника
-                var appointments = Entities.GetContext().Appointments
-                    .Where(a => a.EmployeeID == _currentEmployeeId)
-                    .Select(a => new
-                    {
-                        AppointmentID = a.AppointmentID,
-                        AppointmentDateTime = a.AppointmentDateTime,
-                        ClientName = a.Clients.FirstName + " " + a.Clients.LastName, // Имя клиента
-                        ServiceName = a.Services.ServiceName, // Название услуги
-                        Status = a.Status // Статус записи
-                    })
-                    .ToList();
+                using (var context = new Entities())
+                {
+                    _allAppointments = context.Appointments
+                        .Where(a => a.EmployeeID == _employeeId)
+                        .Include(a => a.Clients)
+                        .Include(a => a.Services)
+                        .ToList();
 
-                // Привязка данных к DataGrid
-                DataGridAppointments.ItemsSource = appointments;
+                    DataGridAppointments.ItemsSource = _allAppointments.Select(a => new
+                    {
+                        a.AppointmentID,
+                        AppointmentDateTime = a.AppointmentDateTime.ToString("dd.MM.yyyy HH:mm"),
+                        ClientName = $"{a.Clients.FirstName} {a.Clients.LastName}",
+                        ServiceName = a.Services.ServiceName,
+                        a.Status
+                    });
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при загрузке записей: {ex.Message}");
+                MessageBox.Show($"Ошибка при загрузке записей: {ex.Message}", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void AddAppointment_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var currentEmployee = Entities.GetContext().Employees
-                    .FirstOrDefault(emp => emp.EmployeeID == _currentEmployeeId);
+            NavigationService?.Navigate(new AddEditAppointmentPage(_employeeId));
+        }
 
-                NavigationService.Navigate(new AddEditAppointmentPage(currentEmployee));
-            }
-            catch (Exception ex)
+        private void EditAppointment_Click(object sender, RoutedEventArgs e)
+        {
+            dynamic selectedItem = DataGridAppointments.SelectedItem;
+            if (selectedItem == null)
             {
-                MessageBox.Show($"Ошибка при добавлении записи: {ex.Message}");
+                MessageBox.Show("Выберите запись для редактирования", "Внимание",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            using (var context = new Entities())
+            {
+                var appointment = context.Appointments.Find(selectedItem.AppointmentID);
+                if (appointment != null)
+                {
+                    NavigationService?.Navigate(new AddEditAppointmentPage(_employeeId, appointment));
+                }
             }
         }
 
         private void DeleteAppointment_Click(object sender, RoutedEventArgs e)
         {
-            try
+            dynamic selectedItem = DataGridAppointments.SelectedItem;
+            if (selectedItem == null)
             {
-                var selectedAppointment = DataGridAppointments.SelectedItem as dynamic;
-                if (selectedAppointment == null)
-                {
-                    MessageBox.Show("Выберите запись для удаления.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                int appointmentId = selectedAppointment.AppointmentID;
-
-                // Находим запись в базе данных
-                var appointmentToDelete = Entities.GetContext().Appointments
-                    .FirstOrDefault(a => a.AppointmentID == appointmentId);
-
-                if (appointmentToDelete == null)
-                {
-                    MessageBox.Show("Запись не найдена.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                var result = MessageBox.Show("Вы уверены, что хотите удалить запись?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    Entities.GetContext().Appointments.Remove(appointmentToDelete);
-                    Entities.GetContext().SaveChanges();
-                    LoadAppointments(); // Обновляем данные после удаления
-                    MessageBox.Show("Запись успешно удалена.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
+                MessageBox.Show("Выберите запись для удаления", "Внимание",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при удалении записи: {ex.Message}");
-            }
-        }
 
-        private void EditAppointment_Click(object sender, RoutedEventArgs e)
-        {
-            try
+            var result = MessageBox.Show("Удалить выбранную запись?", "Подтверждение",
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
             {
-                // Получаем выбранный анонимный объект
-                var selectedAppointment = DataGridAppointments.SelectedItem as dynamic;
-                if (selectedAppointment == null)
+                try
                 {
-                    MessageBox.Show("Выберите запись для редактирования.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
+                    using (var context = new Entities())
+                    {
+                        var appointment = context.Appointments.Find(selectedItem.AppointmentID);
+                        if (appointment != null)
+                        {
+                            context.Appointments.Remove(appointment);
+                            context.SaveChanges();
+                            LoadAppointments();
+                        }
+                    }
                 }
-
-                // Получаем ID выбранной записи
-                int appointmentId = selectedAppointment.AppointmentID;
-
-                // Находим запись в базе данных
-                var appointmentToEdit = Entities.GetContext().Appointments
-                    .FirstOrDefault(a => a.AppointmentID == appointmentId);
-
-                if (appointmentToEdit == null)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Запись не найдена.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-                NavigationService.Navigate(new AddEditAppointmentPage(_currentEmployee, appointmentToEdit));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при редактировании записи: {ex.Message}");
             }
         }
 
@@ -147,10 +113,11 @@ namespace salon_krasoti.PagesEmployee
         {
             if (Visibility == Visibility.Visible)
             {
+                // Обновляем данные из базы данных
                 Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
                 LoadAppointments();
             }
         }
+
     }
 }
-

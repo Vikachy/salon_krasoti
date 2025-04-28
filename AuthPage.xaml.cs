@@ -163,7 +163,7 @@ namespace salon_krasoti
                 CaptchaCanvas.Children.Add(line);
             }
 
-            // Добавление шума (точки)
+            
             for (int i = 0; i < 30; i++)
             {
                 var ellipse = new Ellipse
@@ -206,8 +206,12 @@ namespace salon_krasoti
 
             if (newWindow != null)
             {
-                Application.Current.MainWindow?.Close();
+
+                var currentWindow = Window.GetWindow(this);
+
                 newWindow.Show();
+
+                currentWindow?.Close();
             }
             else
             {

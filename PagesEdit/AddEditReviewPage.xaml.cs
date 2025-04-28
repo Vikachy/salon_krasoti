@@ -35,7 +35,6 @@ namespace salon_krasoti.PagesEdit
             LoadClients();
             LoadServices();
 
-            // Устанавливаем выбранные значения в ComboBox и TextBox
             if (_currentReview.ClientID > 0)
             {
                 ClientComboBox.SelectedValue = _currentReview.ClientID;

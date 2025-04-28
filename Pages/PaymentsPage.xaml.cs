@@ -50,11 +50,11 @@ namespace salon_krasoti.Pages
 
             private void EditPayment_Click(object sender, RoutedEventArgs e)
         {
-            var selectedPayment = DataGridPayments.SelectedItem as dynamic; // Используем dynamic для анонимного типа
+            var selectedPayment = DataGridPayments.SelectedItem as dynamic; 
             if (selectedPayment != null)
             {
                 int paymentId = selectedPayment.PaymentID;
-                var payment = Entities.GetContext().Payments.Find(paymentId); // Загружаем полный объект Payments
+                var payment = Entities.GetContext().Payments.Find(paymentId); 
                 if (payment != null)
                 {
                     NavigationService.Navigate(new PagesEdit.AddEditPaymentPage(payment));

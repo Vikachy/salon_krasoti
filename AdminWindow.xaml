@@ -29,6 +29,8 @@
                 <Button Content="Отзывы" Style="{StaticResource MenuButtonStyle}" Click="Reviews_Click"/>
                 <Button x:Name="PromotionsButton" Content="Акции" Style="{StaticResource MenuButtonStyle}" Click="Promotions_Click"/>
                 <Button x:Name="ReportsButton" Content="Отчеты" Style="{StaticResource MenuButtonStyle}" Click="Reports_Click"/>
+                <Button x:Name="SalesChart" Content="Отчет по продажам" Style="{StaticResource MenuButtonStyle}" Click="SalesChart_Click"/>
+
                 <Button Content="Выйти" Style="{StaticResource LogoutButtonStyle}" Click="Logout_Click"/>
             </StackPanel>
 

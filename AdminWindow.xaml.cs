@@ -47,7 +47,7 @@ namespace salon_krasoti
         private void Reviews_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.ReviewsPage());
         private void Promotions_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.PromotionsPage());
         private void Reports_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.ReportsPage());
-
+        private void SalesChart_Click(object sender, RoutedEventArgs e) => NavigateToPage(new Pages.SalesChartPage());
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();

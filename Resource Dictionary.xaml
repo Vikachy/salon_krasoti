@@ -499,4 +499,18 @@
         <Setter Property="FontSize" Value="13"/>
     </Style>
 
+
+    <!-- Стиль для форматирования суммы -->
+    <Style x:Key="AmountStyle" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="TextAlignment" Value="Right"/>
+        <Setter Property="Padding" Value="0,0,10,0"/>
+    </Style>
+
+    <!-- Стиль для форматирования даты -->
+    <Style x:Key="DateStyle" TargetType="TextBlock">
+        <Setter Property="TextAlignment" Value="Center"/>
+    </Style>
+
+
 </ResourceDictionary>

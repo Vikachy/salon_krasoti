@@ -65,7 +65,7 @@ namespace salon_krasoti.PagesEdit
                 }
 
                 context.SaveChanges();
-                NavigationService.GoBack(); // Возвращаемся на предыдущую страницу
+                NavigationService.GoBack();
             }
             catch (Exception ex)
             {
@@ -75,7 +75,7 @@ namespace salon_krasoti.PagesEdit
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack(); // Возвращаемся на предыдущую страницу
+            NavigationService.GoBack(); 
         }
     }
 }

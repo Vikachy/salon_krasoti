@@ -25,7 +25,6 @@ namespace salon_krasoti.Pages
 
         private void LoadSales()
         {
-            // Загрузка данных с использованием навигационных свойств
             var sales = Entities.GetContext().Sales
             .Select(s => new
             {

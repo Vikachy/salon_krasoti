@@ -48,40 +48,37 @@ namespace salon_krasoti.Pages
         {
             if (DataGridEmployees.SelectedItem is object selectedEmployee)
             {
-                // Get the EmployeeFullName from the selected item using reflection
                 string fullName = selectedEmployee.GetType().GetProperty("EmployeeFullName")?.GetValue(selectedEmployee) as string;
 
                 if (!string.IsNullOrEmpty(fullName))
                 {
                     try
                     {
-                        // Use a different variable name here (like 'employeeToEdit') to avoid the CS0136 error
                         Employees employeeToEdit = Entities.GetContext().Employees
-                            .FirstOrDefault(emp => (emp.FirstName + " " + emp.LastName) == fullName); // Doing it this way to avoid LINQ to Entities issue with EmployeeFullName
+                            .FirstOrDefault(emp => (emp.FirstName + " " + emp.LastName) == fullName); 
 
                         if (employeeToEdit != null)
                         {
-                            // Navigate to the edit page with the employee object
                             NavigationService.Navigate(new AddEditEmployeePage(employeeToEdit));
                         }
                         else
                         {
-                            MessageBox.Show("Employee not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("Сотрудник не найден.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error during edit: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"Ошибка во время редактирования: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Unable to get selected employee's Full Name.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Не удается получить полное имя выбранного сотрудника.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Please select an employee to edit.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Пожалуйста, выберите сотрудника для редактирования.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -92,12 +89,10 @@ namespace salon_krasoti.Pages
 
         private void DeleteEmployee_Click(object sender, RoutedEventArgs e)
         {
-            // Get the selected item
             var selectedEmployee = DataGridEmployees.SelectedItem;
 
             if (selectedEmployee != null)
             {
-                // Use reflection to get the value of the FullName property
                 var fullName = selectedEmployee.GetType().GetProperty("EmployeeFullName")?.GetValue(selectedEmployee) as string;
 
                 if (!string.IsNullOrEmpty(fullName))
@@ -111,25 +106,23 @@ namespace salon_krasoti.Pages
                     {
                         try
                         {
-                            // Find the employee in the database - CHANGED THIS
                             var employee = Entities.GetContext().Employees
                                 .FirstOrDefault(emp => (emp.FirstName + " " + emp.LastName) == fullName);
 
                             if (employee != null)
                             {
-                                // Delete the employee
                                 Entities.GetContext().Employees.Remove(employee);
                                 Entities.GetContext().SaveChanges();
-                                LoadData(); // Refresh data
+                                LoadData(); 
                             }
                             else
                             {
-                                MessageBox.Show("Employee not found in the database for deletion.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); // Modified Message
+                                MessageBox.Show("Сотрудник, не найденный в базе данных для удаления.", "Error", MessageBoxButton.OK, MessageBoxImage.Error); // Modified Message
                             }
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Error during deletion: {ex.Message}", "Error", // Modified Message
+                            MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Error",
                                             MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }

@@ -33,7 +33,6 @@ namespace salon_krasoti.Pages
 
         private void EditPromotion_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем выбранную акцию
             var selectedPromotion = DataGridPromotions.SelectedItem as Promotions;
 
             if (selectedPromotion != null)
@@ -48,19 +47,16 @@ namespace salon_krasoti.Pages
 
         private void DeletePromotion_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем выбранную акцию
             var selectedPromotion = DataGridPromotions.SelectedItem as Promotions;
 
             if (selectedPromotion != null)
             {
-                // Подтверждение удаления
                 var result = MessageBox.Show("Вы уверены, что хотите удалить эту акцию?", "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     try
                     {
-                        // Удаляем акцию из базы данных
                         var context = Entities.GetContext();
                         context.Promotions.Remove(selectedPromotion);
                         context.SaveChanges();

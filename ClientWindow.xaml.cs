@@ -32,12 +32,11 @@ namespace salon_krasoti
         {
             try
             {
-                // Find ClientID from UserAccounts
-                int? clientId = _user.ClientID;  // Use int? to accept nullable int
+                int? clientId = _user.ClientID; 
 
-                if (clientId.HasValue) // Check if clientId has a value
+                if (clientId.HasValue) 
                 {
-                    MainFrame.Navigate(new PagesClient.AppointmentsPage(clientId.Value)); // Access the value using clientId.Value
+                    MainFrame.Navigate(new PagesClient.AppointmentsPage(clientId.Value)); 
                 }
                 else
                 {
@@ -60,12 +59,11 @@ namespace salon_krasoti
         {
             try
             {
-                // Find ClientID from UserAccounts
-                int? clientId = _user.ClientID;  // Use int? to accept nullable int
+                int? clientId = _user.ClientID;  
 
-                if (clientId.HasValue) // Check if clientId has a value
+                if (clientId.HasValue) 
                 {
-                    MainFrame.Navigate(new PagesClient.AppointmentsPage(clientId.Value)); // Access the value using clientId.Value
+                    MainFrame.Navigate(new PagesClient.AppointmentsPage(clientId.Value)); 
                 }
                 else
                 {
@@ -87,7 +85,6 @@ namespace salon_krasoti
         {
             try
             {
-                // Ищем ClientID в таблице UserAccounts по Username
                 var userAccount = Entities.GetContext().UserAccounts
                     .FirstOrDefault(u => u.Username == _user.Username);
 
@@ -97,14 +94,12 @@ namespace salon_krasoti
                     return;
                 }
 
-                // Проверяем, есть ли ClientID у пользователя
                 if (!userAccount.ClientID.HasValue)
                 {
                     MessageBox.Show($"Для пользователя '{_user.Username}' не найден ClientID.");
                     return;
                 }
 
-                // Переходим на страницу отзывов
                 NavigateToPage(new PagesClient.MyReviewsPage(userAccount.ClientID.Value));
             }
             catch (Exception ex)

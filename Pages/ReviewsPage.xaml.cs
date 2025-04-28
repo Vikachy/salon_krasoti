@@ -55,7 +55,6 @@ namespace salon_krasoti.Pages
                 }
             }
 
-            // Преобразуем в анонимный тип для отображения
             DataGridReviews.ItemsSource = currentReviews.Select(r => new
             {
                 ReviewID = r.ReviewID,

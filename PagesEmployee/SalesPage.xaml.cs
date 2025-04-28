@@ -36,22 +36,19 @@ namespace salon_krasoti.PagesEmployee
             {
                 using (var context = new Entities())
                 {
-                    // Загружаем продажи для текущего сотрудника
                     var sales = context.Sales
                         .Where(s => s.EmployeeID == _currentEmployeeId)
                         .ToList();
 
-                    // Создаем список для отображения в DataGrid
                     var salesView = sales.Select(sale => new
                     {
                         SaleID = sale.SaleID,
                         ServiceName = context.Services
-                            .FirstOrDefault(service => service.ServiceID == sale.ServiceID)?.ServiceName, // Название услуги
+                            .FirstOrDefault(service => service.ServiceID == sale.ServiceID)?.ServiceName, 
                         SaleDate = sale.SaleDate,
                         QuantitySold = sale.QuantitySold
                     }).ToList();
 
-                    // Привязываем данные к DataGrid
                     DataGridSales.ItemsSource = salesView;
                 }
             }
@@ -65,7 +62,6 @@ namespace salon_krasoti.PagesEmployee
         {
             try
             {
-                // Переход на страницу добавления продажи
                 NavigationService.Navigate(new AddEditSalePage(_currentEmployeeId));
             }
             catch (Exception ex)
@@ -78,7 +74,6 @@ namespace salon_krasoti.PagesEmployee
         {
             try
             {
-                // Получаем выбранный анонимный объект
                 var selectedSale = DataGridSales.SelectedItem as dynamic;
                 if (selectedSale == null)
                 {
@@ -86,10 +81,8 @@ namespace salon_krasoti.PagesEmployee
                     return;
                 }
 
-                // Получаем ID выбранной продажи
                 int saleId = selectedSale.SaleID;
 
-                // Находим продажу в базе данных
                 using (var context = new Entities())
                 {
                     var saleToEdit = context.Sales.FirstOrDefault(s => s.SaleID == saleId);
@@ -99,7 +92,6 @@ namespace salon_krasoti.PagesEmployee
                         return;
                     }
 
-                    // Переход на страницу редактирования продажи
                     NavigationService.Navigate(new AddEditSalePage(_currentEmployeeId, saleToEdit));
                 }
             }
@@ -113,7 +105,6 @@ namespace salon_krasoti.PagesEmployee
         {
             try
             {
-                // Получаем выбранный анонимный объект
                 var selectedSale = DataGridSales.SelectedItem as dynamic;
                 if (selectedSale == null)
                 {
@@ -121,16 +112,13 @@ namespace salon_krasoti.PagesEmployee
                     return;
                 }
 
-                // Получаем ID выбранной продажи
                 int saleId = selectedSale.SaleID;
 
-                // Подтверждение удаления
                 var result = MessageBox.Show("Вы уверены, что хотите удалить продажу?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     using (var context = new Entities())
                     {
-                        // Находим продажу в базе данных
                         var saleToDelete = context.Sales.FirstOrDefault(s => s.SaleID == saleId);
                         if (saleToDelete == null)
                         {

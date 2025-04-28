@@ -54,7 +54,6 @@ namespace salon_krasoti.Pages
         {
             if (DataGridServices.SelectedItem is Services selectedService)
             {
-                // Показываем название удаляемой услуги в сообщении
                 var message = $"Вы уверены, что хотите удалить услугу \"{selectedService.ServiceName}\"?";
 
                 if (MessageBox.Show(message, "Подтверждение удаления", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -62,14 +61,13 @@ namespace salon_krasoti.Pages
                     try
                     {
                         var context = Entities.GetContext();
-                        // Убедимся, что объект прикреплен к контексту
                         var serviceToDelete = context.Services.Find(selectedService.ServiceID);
                         if (serviceToDelete != null)
                         {
                             context.Services.Remove(serviceToDelete);
                             context.SaveChanges();
                             MessageBox.Show($"Услуга \"{selectedService.ServiceName}\" успешно удалена!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                            LoadServices(); // Обновляем данные
+                            LoadServices(); 
                         }
                     }
                     catch (Exception ex)

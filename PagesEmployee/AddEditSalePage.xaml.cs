@@ -37,10 +37,8 @@ namespace salon_krasoti.PagesEmployee
         {
             using (var context = new Entities())
             {
-                // Загрузка услуг
                 ComboBoxServices.ItemsSource = context.Services.ToList();
 
-                // Если это редактирование, заполняем поля
                 if (_currentSale.SaleID != 0)
                 {
                     ComboBoxServices.SelectedValue = _currentSale.ServiceID;
@@ -49,7 +47,6 @@ namespace salon_krasoti.PagesEmployee
                 }
                 else
                 {
-                    // Если это новая продажа, устанавливаем текущую дату
                     DatePickerSaleDate.SelectedDate = DateTime.Now;
                 }
             }
@@ -59,7 +56,6 @@ namespace salon_krasoti.PagesEmployee
         {
             try
             {
-                // Проверка заполнения полей
                 if (ComboBoxServices.SelectedItem == null ||
                     DatePickerSaleDate.SelectedDate == null ||
                     string.IsNullOrWhiteSpace(TextBoxQuantity.Text) ||
@@ -69,7 +65,6 @@ namespace salon_krasoti.PagesEmployee
                     return;
                 }
 
-                // Сохранение данных
                 _currentSale.ServiceID = (int)ComboBoxServices.SelectedValue;
                 _currentSale.SaleDate = DatePickerSaleDate.SelectedDate.Value;
                 _currentSale.QuantitySold = quantity;

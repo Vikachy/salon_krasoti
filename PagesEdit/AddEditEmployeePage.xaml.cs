@@ -29,7 +29,6 @@ namespace salon_krasoti.PagesEdit
 
             if (_employee != null)
             {
-                // Заполняем поля данными сотрудника, если это редактирование
                 TextBoxFirstName.Text = _employee.FirstName;
                 TextBoxLastName.Text = _employee.LastName;
                 TextBoxPosition.Text = _employee.Position;
@@ -56,7 +55,6 @@ namespace salon_krasoti.PagesEdit
 
                 if (_employee == null)
                 {
-                    // Добавление нового сотрудника
                     var newEmployee = new Employees
                     {
                         FirstName = TextBoxFirstName.Text,
@@ -82,7 +80,7 @@ namespace salon_krasoti.PagesEdit
                 }
 
                 context.SaveChanges();
-                NavigationService?.GoBack(); // Возврат на предыдущую страницу
+                NavigationService?.GoBack(); 
             }
             catch (Exception ex)
             {

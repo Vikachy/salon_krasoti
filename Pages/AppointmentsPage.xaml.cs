@@ -31,9 +31,8 @@ namespace salon_krasoti.Pages
 
         private void UpdateAppointments()
         {
-            var currentAppointments = _allAppointments.AsEnumerable(); // Явное приведение к IEnumerable<Appointments>
+            var currentAppointments = _allAppointments.AsEnumerable(); 
 
-            // Фильтрация по поиску
             if (!string.IsNullOrWhiteSpace(SearchAppointment.Text))
             {
                 currentAppointments = currentAppointments.Where(a =>
